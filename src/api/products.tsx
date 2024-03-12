@@ -1,9 +1,15 @@
-import { Product, ProductCreate } from "../@types";
+import { ListProducts,Product, ProductCreate } from "../@types";
 import axiosInstance from "../utils.ts/axios";
+import { AxiosResponse } from "axios";
 
 export default class ProductRequest {
-  static async createProduct(product: ProductCreate) {
-    return await axiosInstance.post<Product>("products",product);
-    //console.log(rs);
+  static async createProduct(
+    product: ProductCreate
+  ): Promise<AxiosResponse<Product>> {
+    return await axiosInstance.post<Product>("products", product);
+  }
+
+  static async getProducts() {
+    return await axiosInstance.get<ListProducts>("products");
   }
 }

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { DataProductRow, Product } from "../@types";
 
 export const checkLoginUser = () => {
   const user = localStorage.getItem("user");
@@ -11,3 +12,15 @@ export const checkLoginUser = () => {
 
   return true;
 };
+
+export const getFieldTableProduct = ( products: Product[] ): DataProductRow[] | [] =>
+{
+  return products.map((product) => {
+    return {
+      name: product.name,
+      quantity: product.quantity,
+      price: product.price,
+      createdAt: product.createdAt,
+    };
+  });
+}

@@ -17,27 +17,23 @@ const BeSide = () => {
             <Sidebar.Item href="/dashboard" icon={HiChartPie}>
               Dashboard
             </Sidebar.Item>
-            <Sidebar.Item
-              href="/dashboard/products"
-              icon={HiOutlineClipboardList}
-            >
-              Registrar Productos
-            </Sidebar.Item>
+            <Sidebar.Collapse label="Productos" href="#" icon={HiOutlineClipboardList}>
+              <Sidebar.Item href="/dashboard/products">
+                Registrar Productos
+              </Sidebar.Item>
+            </Sidebar.Collapse>
             <Sidebar.Item href="#" icon={HiInbox} label="3">
               Inbox
             </Sidebar.Item>
             <Sidebar.Item href="#" icon={HiUser}>
               Users
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiShoppingBag}>
-              Products
-            </Sidebar.Item>
             <Sidebar.Item href="#" icon={HiArrowSmRight}>
-              Sign In
+              Cerrar Sesion
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiTable}>
+            {/* <Sidebar.Item href="#" icon={HiTable}>
               Sign Up
-            </Sidebar.Item>
+            </Sidebar.Item> */}
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>

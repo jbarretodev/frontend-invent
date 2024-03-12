@@ -8,7 +8,9 @@ type Props = {
 const ProtectedRoute = ({ children }: Props) => {
   const isLogged = checkLoginUser();
 
-  if (!isLogged) {
+  if ( !isLogged )
+  {
+    localStorage.clear()
     return <Navigate to="/" />;
   }
 

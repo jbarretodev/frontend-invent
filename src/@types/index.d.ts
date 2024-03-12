@@ -21,8 +21,7 @@ export interface Credential {
   password: string;
 }
 
-export interface ResourceNotFound
-{
+export interface ResourceNotFound {
   status: number;
   message: string;
 }
@@ -32,25 +31,33 @@ export interface ResourceError {
   message: string;
 }
 
-export interface LayoutProps  { 
-   children: React.ReactNode
+export interface LayoutProps {
+  children: React.ReactNode;
 }
 
-export interface ProductCreate
-{
-  name: string,
-  quantity: number
+export interface ProductCreate {
+  name: string;
+  quantity: number;
+  price: number;
 }
 
-export interface ProductRoot {
-  product: Product;
+export interface ListProducts {
+  products: Product[];
 }
 
 export interface Product {
   name: string;
   quantity: number;
   code: string;
+  price: number;
   createdAt: string;
   updatedAt: string;
   id: number;
+}
+
+export interface DataProductRow {
+  name: string;
+  quantity: number;
+  price: number;
+  createdAt: string;
 }

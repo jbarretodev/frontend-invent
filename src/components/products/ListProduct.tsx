@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { getFieldTableProduct } from "../../utils.ts";
 import SpinnerLocal from "../shared/Spinner.tsx";
+import { Card } from "flowbite-react";
 
 type Props = {
   className: string;
@@ -22,6 +23,11 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
     {
       name: "Nombre",
       selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Codigo",
+      selector: (row) => row.code,
       sortable: true,
     },
     {
@@ -73,7 +79,9 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
       {isLoading ? (
         <SpinnerLocal />
       ) : (
-        <DataTable columns={columns} data={dataTableProduct} />
+        <Card className="h-22 overflow-y-auto">
+          <DataTable columns={columns} data={dataTableProduct} />
+        </Card>
       )}
     </div>
   );

@@ -1,4 +1,3 @@
-import React from "react";
 import BeSide from "../../components/shared/BeSide";
 import { LayoutProps } from "../../@types";
 

@@ -57,7 +57,52 @@ export interface Product {
 
 export interface DataProductRow {
   name: string;
+  code: string;
   quantity: number;
   price: number;
   createdAt: string;
+}
+
+export interface OperationCreate {
+  quantity: number;
+  product_id: number;
+  type_op: number;
+}
+
+export interface HistoryProductRoot {
+  historyProduct: HistoryProduct;
+}
+
+export interface HistoryProduct {
+  quantity: number;
+  typeOp: number;
+  productId: number;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+  id: number;
+}
+
+export interface DataListOperationRow {
+  product: string;
+  quantity: number;
+  responsible: string;
+  date: string;
+  type_operation: number;
+}
+
+export interface ListOperationHistory {
+  historyOperations: HistoryOperation[];
+}
+
+export interface HistoryOperation {
+  id: number;
+  quantity: number;
+  typeOp: number;
+  userId: number;
+  productId: number;
+  createdAt: string;
+  updatedAt: string;
+  product: Product;
+  user: User;
 }

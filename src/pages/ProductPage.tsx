@@ -1,4 +1,3 @@
-//import React from "react";
 import FormProduct from "../components/products/FormProduct";
 import ListProduct from "../components/products/ListProduct";
 import DashboardLayout from "./layout/DashboardLayout";
@@ -6,12 +5,11 @@ import { useState } from "react";
 
 const ProductPage = () => {
   const [reloadFlag, setReloadFlag] = useState<boolean>(false);
-  
-  const reloadProduct = () =>
-  {
+
+  const reloadProduct = () => {
     setReloadFlag(!reloadFlag);
   };
-  
+
   return (
     <>
       <DashboardLayout>

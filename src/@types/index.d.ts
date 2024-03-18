@@ -106,3 +106,31 @@ export interface HistoryOperation {
   product: Product;
   user: User;
 }
+
+export interface DetailInvoiceRow {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
+export interface Purchase {
+  total_invoice: number;
+  status: boolean;
+  payment_method: string;
+  num_operation?: string;
+}
+
+export interface Detail {
+  product_id: number;
+  product_id: number;
+  quantity: number;
+  unit_price: number;
+  total_line: number;
+}
+
+export interface Invoice {
+  invoice: Purchase;
+  details: Detail[];
+}

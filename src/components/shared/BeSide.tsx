@@ -24,7 +24,7 @@ const BeSide = () => {
               href="#"
               icon={HiCreditCard}
             >
-              <Sidebar.Item>
+              <Sidebar.Item href="/dashboard/invoice">
                 Registrar Venta
               </Sidebar.Item>
               <Sidebar.Item>

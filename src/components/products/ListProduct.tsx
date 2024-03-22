@@ -42,7 +42,7 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
     },
     {
       name: "Fecha de Registro",
-      selector: (row) => row.createdAt,
+      selector: (row) => row.createdAt.split("T")[0],
       sortable: true,
     },
   ];
@@ -79,7 +79,7 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
       {isLoading ? (
         <SpinnerLocal />
       ) : (
-        <Card className="h-22 overflow-y-auto">
+        <Card className='h-22 overflow-y-auto'>
           <DataTable columns={columns} data={dataTableProduct} />
         </Card>
       )}

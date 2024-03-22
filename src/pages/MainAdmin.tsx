@@ -1,12 +1,13 @@
-import DashboardLayout from './layout/DashboardLayout'
+import Dashboard from "../components/Dashboard/Dashboard";
+import DashboardLayout from "./layout/DashboardLayout";
 const MainAdmin = () => {
   return (
     <>
       <DashboardLayout>
-        <h1>Hola desde el dashboard</h1>
+        <Dashboard />
       </DashboardLayout>
     </>
-  )
-}
+  );
+};
 
-export default MainAdmin
+export default MainAdmin;

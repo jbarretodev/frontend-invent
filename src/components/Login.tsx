@@ -4,17 +4,30 @@ import { useState } from "react";
 import AuthService from "../api/auth";
 import { ResponseLoginUser, ResourceNotFound } from "../@types";
 import toast from "react-hot-toast";
-import React from 'react';
+import React from "react";
+//import { useHotkeys } from "react-hotkeys-hook";
 
 interface ChildProps {
   redirectToDashboard: () => void;
 }
 
-const Login: React.FC<ChildProps> = ({redirectToDashboard}) => {
+const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const makeLogin = async () => {
+  const makeLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (email.trim() === "") {
+      toast.error("Error! Email vacio");
+      return;
+    }
+
+    if (password.trim() === "") {
+      toast.error("Error! password vacio");
+      return;
+    }
+
     const rsLogin: ResponseLoginUser | ResourceNotFound =
       await AuthService.login(email, password);
 
@@ -26,40 +39,48 @@ const Login: React.FC<ChildProps> = ({redirectToDashboard}) => {
       localStorage.setItem("user", JSON.stringify(rs.user));
       localStorage.setItem("expireAt", rs.expireAt);
 
-      redirectToDashboard()
+      redirectToDashboard();
     }
   };
 
   return (
     <>
-      <Card className="max-w-sm">
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <Card className='max-w-md'>
+        <h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
           Bienvenido a Invent
         </h5>
-        <form className="flex max-w-md flex-col gap-4">
+        <form
+          onSubmit={(e) => {
+            makeLogin(e);
+          }}
+        >
           <div>
-            <div className="mb-2 block">
-              <Label htmlFor="email" value="Ingrese su Correo" />
+            <div className='mb-2 block'>
+              <Label htmlFor='email' value='Ingrese su Correo' />
             </div>
             <TextInput
-              id="email1"
+              id='email1'
               onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="xxx@yyy.com"
+              type='email'
+              placeholder='xxx@yyy.com'
+              required
             />
           </div>
           <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password" value="Ingrese tu Clave" />
+            <div className='mb-2 block'>
+              <Label htmlFor='password' value='Ingrese tu Clave' />
             </div>
             <TextInput
-              id="password"
+              id='password'
               onChange={(e) => setPassword(e.target.value)}
-              type="password"
+              type='password'
+              required
             />
           </div>
 
-          <Button onClick={makeLogin}>Iniciar Sesion!</Button>
+          <Button type='submit' id='button-login'>
+            Iniciar Sesion!
+          </Button>
         </form>
       </Card>
     </>

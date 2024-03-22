@@ -134,3 +134,63 @@ export interface Invoice {
   invoice: Purchase;
   details: Detail[];
 }
+export interface ListInvoices {
+  invoices: InvoiceResponse[];
+}
+
+export interface InvoiceResponse {
+  id: number;
+  totalInvoice: string;
+  userId: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+  paymentMethod: string;
+  numOperation?: string;
+  user: User;
+}
+
+export interface PurchaseRow {
+  id: number;
+  user: string;
+  method: string;
+  status: string;
+  num_operation: string;
+  date: string;
+  total: number;
+}
+
+export interface DetailInvoiceInter {
+  id: number;
+  totalInvoice: string;
+  userId: number;
+  date: string;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+  paymentMethod: string;
+  numOperation: any;
+  user: User;
+  detail_invoice: InfoDetailInvoice[];
+}
+
+export interface InfoDetailInvoice {
+  id: number;
+  invoiceId: number;
+  productId: number;
+  quantity: string;
+  unitPrice: string;
+  totalLine: string;
+  createdAt: string;
+  updatedAt: string;
+  products: Product;
+}
+
+export interface Consolidate {
+  invoices_consolidate: number;
+  count_invoices: number;
+  invoices: InvoiceResponse[];
+  invoices_not_paid: number;
+  invoices_paid: number;
+}
+21 de marzo de 2024

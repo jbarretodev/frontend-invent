@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 
 interface CustomCellProps {
   id: number;
+  route: string;
+  message: string;
 }
 
-const CustomCell = ({ id }: CustomCellProps) => {
+const CustomCell = ({ id,route, message }: CustomCellProps) => {
   return (
     <>
       <Button outline gradientDuoTone='cyanToBlue'>
-        <Link to={`/dashboard/invoice/${id}`}>Ver Detalles!</Link>
+        <Link to={`${route}/${id}`}>{ message }</Link>
       </Button>
     </>
   );

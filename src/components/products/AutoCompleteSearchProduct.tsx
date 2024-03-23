@@ -10,12 +10,9 @@ const AutoCompleteSearchProduct: React.FC<AutoCompleteProp> = ({
   listProducts,
   onProductSelected,
 }: AutoCompleteProp) => {
-
   useEffect(() => {
-    if (listProducts.products.length === 1) {
-      onProductSelected(listProducts.products[0]);
-    }
-  },[listProducts])
+    onProductSelected(listProducts.products[0]);
+  }, [listProducts]);
 
   const setProductOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const product = JSON.parse(e.target.value) as Product;

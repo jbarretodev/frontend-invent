@@ -18,4 +18,26 @@ export default class ProductRequest {
       `products/searcher?searcher=${search}`
     );
   }
+
+  static async getProduct(id: number) {
+    return await axiosInstance.get<Product>(`products/by-id/${id}`);
+  }
+
+  static async updatePriceProduct(id: number, price: number) {
+    return await axiosInstance.patch<Product>(`products/${id}/update-price`, {
+      price,
+    });
+  }
+
+  static async updateNameProduct(id: number, name: string) {
+    return await axiosInstance.patch<Product>(`products/${id}/update-name`, {
+      name,
+    });
+  }
+
+  static async updateSellByProduct(id: number, mode: string) {
+    return await axiosInstance.patch<Product>(`products/${id}/update-mode`, {
+      mode,
+    });
+  }
 }

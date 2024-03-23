@@ -101,10 +101,10 @@ const FormInvoice = () => {
     if (rsPurchase.status === 201) {
       toast.success("Compra registrada con exito", { duration: 5000 });
       setDetails([]);
-      setIsPaid(false)
-      setQuantity("0")
-      setTotal(0)
-      setNumOperation("")
+      setIsPaid(false);
+      setQuantity("0");
+      setTotal(0);
+      setNumOperation("");
     }
   };
 
@@ -163,6 +163,18 @@ const FormInvoice = () => {
               </div>
               <div className='max-w-md'>
                 <div className='mb-2 block'>
+                  <Label htmlFor='price' value='Precio' />
+                </div>
+                <TextInput
+                  id='price'
+                  name='price'
+                  type='text'
+                  value={productSelected?.price}
+                  disabled
+                />
+              </div>
+              <div className='max-w-md'>
+                <div className='mb-2 block'>
                   <Label htmlFor='quantity' value='Cantidad a Comprar' />
                 </div>
                 <TextInput
@@ -194,10 +206,9 @@ const FormInvoice = () => {
                     setTypeOperation(e.target.value)
                   }
                   id='type_operation'
+                  defaultValue={"biopago"}
                 >
-                  <option selected value={"biopago"}>
-                    biopago
-                  </option>
+                  <option value={"biopago"}>biopago</option>
                   <option value={"TDD"}>Tarjeta de Debito</option>
                   <option value={"Bs Efectvo"}>Bs Efectvo</option>
                   <option value={"$ efectivo"}>$ efectivo</option>

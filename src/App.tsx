@@ -11,6 +11,7 @@ import InvoicePage from "./pages/InvoicePage";
 import ListInvoicePage from "./pages/ListInvoicePage";
 import DetailInvoice from "./pages/DetailInvoicePage";
 import InvoiceConsolidatePage from "./pages/InvoiceConsolidatePage";
+import DetailProductPage from "./pages/DetailProductPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='dashboard' element={<ProtectedRoute />}>
             <Route path='' element={<MainAdmin />} />
             <Route path='products' element={<ProductPage />} />
+            <Route path='products/:id' element={<DetailProductPage />} />
             <Route path='invent' element={<InventPage />} />
             <Route
               path='invent/list'

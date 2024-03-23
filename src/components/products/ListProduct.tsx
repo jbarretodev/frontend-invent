@@ -6,6 +6,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { getFieldTableProduct } from "../../utils.ts";
 import SpinnerLocal from "../shared/Spinner.tsx";
 import { Card } from "flowbite-react";
+import CustomCell from "../shared/CustomCell.tsx";
 
 type Props = {
   className: string;
@@ -45,6 +46,11 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
       selector: (row) => row.createdAt.split("T")[0],
       sortable: true,
     },
+    {
+      name: "Detalles",
+      selector: (row) => row.id,
+      cell: (row) => <CustomCell message="Ver Producto" route='/dashboard/products' id={row.id} />,
+    },
   ];
 
   useEffect(() => {
@@ -80,7 +86,13 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
         <SpinnerLocal />
       ) : (
         <Card className='h-22 overflow-y-auto'>
-          <DataTable columns={columns} data={dataTableProduct} />
+          <DataTable
+            columns={columns}
+            data={dataTableProduct}
+            pagination
+            fixedHeader
+            fixedHeaderScrollHeight='400px'
+          />
         </Card>
       )}
     </div>

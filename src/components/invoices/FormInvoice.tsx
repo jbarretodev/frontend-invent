@@ -43,7 +43,7 @@ const FormInvoice = () => {
   const [total, setTotal] = useState<number>(0.0);
   const [quantity, setQuantity] = useState<string>("");
   const [numOperation, setNumOperation] = useState<string>("");
-  const [_typeOperation, setTypeOperation] = useState<string>("");
+  const [_typeOperation, setTypeOperation] = useState<string>("biopago");
 
   const getProductSelected = (product: Product) => {
     setProductSelected(product);

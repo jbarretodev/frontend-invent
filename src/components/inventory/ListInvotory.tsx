@@ -4,6 +4,7 @@ import OperationInventory from "../../api/OperationEnventory";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { getFieldsTableListOperations } from "../../utils.ts";
 import { HiArrowNarrowRight, HiArrowNarrowLeft } from "react-icons/hi";
+import { Card } from "flowbite-react";
 
 const ListInvotory = () => {
   const [listOperation, setListOperation] = useState<DataListOperationRow[]>(
@@ -41,7 +42,7 @@ const ListInvotory = () => {
       name: "Fecha",
       selector: (row) => row.date,
       sortable: true,
-      cell: (row) => row.date.split('T')[0]
+      cell: (row) => row.date.split("T")[0],
     },
   ];
 
@@ -61,17 +62,19 @@ const ListInvotory = () => {
 
   return (
     <>
-      <h3 className="text-3xl font-bold mb-4 text-center mt-10">
+      <h3 className='text-3xl font-bold mb-4 text-center mt-10'>
         Listado de Actividad del Inventario
       </h3>
-      <DataTable
-        title={"Historial de Inventario"}
-        columns={columns}
-        data={listOperation || []}
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="550px"
-      />
+      <Card>
+        <DataTable
+          title={"Historial de Inventario"}
+          columns={columns}
+          data={listOperation || []}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight='550px'
+        />
+      </Card>
     </>
   );
 };

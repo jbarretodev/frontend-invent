@@ -39,6 +39,7 @@ export interface ProductCreate {
   name: string;
   quantity: number;
   price: number;
+  sell_by:string
 }
 
 export interface ListProducts {
@@ -47,6 +48,7 @@ export interface ListProducts {
 
 export interface Product {
   name: string;
+  sellBy:string
   quantity: number;
   code: string;
   price: number;
@@ -56,6 +58,7 @@ export interface Product {
 }
 
 export interface DataProductRow {
+  id: number;
   name: string;
   code: string;
   quantity: number;

@@ -1,8 +1,8 @@
 import { Card } from "flowbite-react";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
-import AuthService from "../api/auth";
-import { ResponseLoginUser, ResourceNotFound } from "../@types";
+import AuthService from "../../api/auth";
+import { ResponseLoginUser, ResourceNotFound } from "../../@types";
 import toast from "react-hot-toast";
 import React from "react";
 //import { useHotkeys } from "react-hotkeys-hook";
@@ -50,6 +50,7 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
           Bienvenido a Invent
         </h5>
         <form
+          className='flex max-w-md flex-col gap-4'
           onSubmit={(e) => {
             makeLogin(e);
           }}

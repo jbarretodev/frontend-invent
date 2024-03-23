@@ -1,22 +1,24 @@
-import { Button, Label, TextInput, Card } from "flowbite-react";
+import { Button, Label, TextInput, Card, Select } from "flowbite-react";
 import React, { useState } from "react";
 import { ProductCreate } from "../../@types";
 import toast from "react-hot-toast";
 import ProductRequest from "../../api/products";
 
-
 interface FormProductProps {
   onProductAdded: () => void;
 }
 
-const FormProduct: React.FC<FormProductProps> = ({onProductAdded}) => {
+const FormProduct: React.FC<FormProductProps> = ({ onProductAdded }) => {
   const [product, setProduct] = useState<ProductCreate>({
     name: "",
     quantity: 0,
     price: 0,
+    sell_by: "by_kilo",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
@@ -26,6 +28,7 @@ const FormProduct: React.FC<FormProductProps> = ({onProductAdded}) => {
       name: "",
       quantity: 0,
       price: 0,
+      sell_by: "",
     });
   };
 
@@ -45,54 +48,75 @@ const FormProduct: React.FC<FormProductProps> = ({onProductAdded}) => {
       return false;
     }
 
+    if (product.sell_by === "-") {
+      toast.error("Error! Seleccione un modo de venta");
+      return false;
+    }
+
     const rs = await ProductRequest.createProduct(product);
 
     if (rs.status === 201) {
       toast.success("Producto Guardado exitisamente!", { duration: 5000 });
       cleanForm();
-      onProductAdded()
+      onProductAdded();
     }
   };
 
   return (
     <>
-      <div className="flex justify-center items-center h-full mb-10">
-        <Card className="w-full md:max-w-xl flex flex-col gap-4 p-4">
-          <form className="flex flex-col gap-4">
+      <div className='flex justify-center items-center h-full mb-10'>
+        <Card className='w-full md:max-w-xl flex flex-col gap-4 p-4'>
+          <form className='flex flex-col gap-4'>
             <div>
-              <Label htmlFor="name" value="Nombre del producto" />
+              <Label htmlFor='name' value='Nombre del producto' />
               <TextInput
                 value={product.name}
-                name="name"
+                name='name'
                 onChange={handleInputChange}
-                id="product"
-                type="text"
-                placeholder=""
+                id='product'
+                type='text'
+                placeholder=''
                 shadow
               />
             </div>
             <div>
-              <Label htmlFor="price" value="Precio del producto" />
+              <Label htmlFor='price' value='Precio del producto' />
               <TextInput
                 value={product.price}
-                name="price"
+                name='price'
                 onChange={handleInputChange}
-                id="price"
-                type="text"
-                placeholder="0.00"
+                id='price'
+                type='text'
+                placeholder='0.00'
                 shadow
               />
             </div>
             <div>
-              <Label htmlFor="quantity" value="Cantidad" />
+              <Label htmlFor='quantity' value='Cantidad' />
               <TextInput
-                id="quantity"
-                type="string"
-                name="quantity"
+                id='quantity'
+                type='string'
+                name='quantity'
                 value={product.quantity}
                 onChange={handleInputChange}
                 shadow
               />
+            </div>
+            <div className='max-w-xl'>
+              <div className='mb-2 block'>
+                <Label htmlFor='sell_by' value='Modo de Venta' />
+              </div>
+              <Select
+                id='sell_by'
+                defaultValue={"by_kilo"}
+                name='sell_by'
+                onChange={handleInputChange}
+              >
+                <option value={"by_kilo"}>
+                  Por Kilo
+                </option>
+                <option value={"by_unit"}>Por Unidad</option>
+              </Select>
             </div>
             <Button onClick={submitFormProduct}>Registrar Producto</Button>
           </form>

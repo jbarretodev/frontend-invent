@@ -31,6 +31,7 @@ export const getFieldTableProduct = (
 ): DataProductRow[] | [] => {
   return products.map((product) => {
     return {
+      id: product.id,
       name: product.name,
       code: product.code,
       quantity: product.quantity,

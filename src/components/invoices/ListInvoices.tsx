@@ -47,8 +47,14 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
     {
       name: "Detalles",
       selector: (row) => row.id,
-      cell: (row) => <CustomCell id={row.id} />,
-    }
+      cell: (row) => (
+        <CustomCell
+          message='Ver Detalles!'
+          route='/dashboard/invoice'
+          id={row.id}
+        />
+      ),
+    },
   ];
 
   useEffect(() => {

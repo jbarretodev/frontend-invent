@@ -51,6 +51,11 @@ const FormInvoice = () => {
   };
 
   const addRowDetailInvoice = () => {
+    if (Number(quantity) === 0) {
+      toast.error("Error! la cantidad debe ser mayor a 0!", { duration: 5000 });
+      return;
+    }
+
     if (productSelected) {
       const detail: DetailInvoiceRow = {
         id: productSelected.id,
@@ -69,6 +74,12 @@ const FormInvoice = () => {
   };
 
   const saveNewPurshase = async () => {
+
+    if (Number(total) === 0) {
+      toast.error("Error! Debe tener al menos un producto para efectuar la compra!", { duration: 5000 });
+      return 
+    }
+
     const dataInvoice: Purchase = {
       status: isPaid,
       num_operation: numOperation,

@@ -39,7 +39,7 @@ export interface ProductCreate {
   name: string;
   quantity: number;
   price: number;
-  sell_by:string
+  sell_by: string;
 }
 
 export interface ListProducts {
@@ -48,7 +48,7 @@ export interface ListProducts {
 
 export interface Product {
   name: string;
-  sellBy:string
+  sellBy: string;
   quantity: number;
   code: string;
   price: number;
@@ -80,6 +80,7 @@ export interface HistoryProduct {
   quantity: number;
   typeOp: number;
   productId: number;
+  date: string;
   userId: number;
   createdAt: string;
   updatedAt: string;
@@ -196,4 +197,3 @@ export interface Consolidate {
   invoices_not_paid: number;
   invoices_paid: number;
 }
-21 de marzo de 2024

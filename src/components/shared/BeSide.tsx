@@ -45,7 +45,7 @@ const BeSide = () => {
                 Registrar Actividad
               </Sidebar.Item>
               <Sidebar.Item href='/dashboard/invent/list'>
-                Listado de Inventario
+                Listado de Actividades
               </Sidebar.Item>
             </Sidebar.Collapse>
             {/* <Sidebar.Item href='#' icon={HiInbox} label='3'>

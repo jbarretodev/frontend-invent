@@ -44,6 +44,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-currency-masked-input:
+    specifier: ^2.5.0
+    version: 2.5.0
   react-data-table-component:
     specifier: ^7.6.2
     version: 7.6.2(react@18.2.0)(styled-components@6.1.8)
@@ -4801,6 +4804,13 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-currency-masked-input@2.5.0:
+    resolution: {integrity: sha512-ezFGzc0fK/ncXxf1SUO7y5gvmrVXX/dI30MEP7l1SNlXJM52jqPU7eYe1qFZ8zDrgxyyFmAjN+jx6BLq6bLJ1g==}
+    dependencies:
+      prop-types: 15.8.1
+      react: 16.14.0
+    dev: false
+
   /react-data-table-component@7.6.2(react@18.2.0)(styled-components@6.1.8):
     resolution: {integrity: sha512-nHe7040fmtrJyQr/ieGrTfV0jBflYGK4sLokC6/AFOv3ThjmA9WzKz8Z8/2wMxzRqLU+Rn0CVFg+8+frKLepWQ==}
     peerDependencies:
@@ -4989,6 +4999,15 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react@16.14.0:
+    resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.8.1
     dev: false
 
   /react@18.2.0:

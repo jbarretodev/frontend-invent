@@ -48,7 +48,7 @@ export interface ListProducts {
 
 export interface Product {
   name: string;
-  sellBy: string;
+  sell_by: string;
   quantity: number;
   code: string;
   price: number;

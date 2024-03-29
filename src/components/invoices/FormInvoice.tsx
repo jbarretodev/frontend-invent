@@ -31,23 +31,33 @@ const FormInvoice = () => {
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const [listProducts, setListProducts] = useState<ListProducts>();
   const [searcher, setSearcher] = useState<string>("");
-  const [value] = useDebounce(searcher, 1000);
+  const [value] = useDebounce(searcher, 500);
   const [showAutoComplete, setShowAutoComplete] = useState<boolean>(false);
   const [productSelected, setProductSelected] = useState<Product>();
   const [quantityProduct, setQuantityProduct] = useState<number>(0);
   const [total, setTotal] = useState<number>(0.0);
-  const [quantity, setQuantity] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(0);
   const [numOperation, setNumOperation] = useState<string>("");
   const [_typeOperation, setTypeOperation] = useState<string>("biopago");
+  const [isByUnit, setIsByUnit] = useState<boolean>(true);
 
   const getProductSelected = (product: Product) => {
-    setProductSelected(product);
-    setQuantityProduct(product.quantity);
+    if (product) {
+      setIsByUnit(product.sell_by == "by_unit" ? true : false);
+      setProductSelected(product);
+      setQuantityProduct(product.quantity);
+    }
   };
 
   const addRowDetailInvoice = () => {
+    const newValue = quantity / 1000;
+
+    if (!isByUnit) setQuantity(newValue);
+
     if (Number(quantity) === 0) {
-      toast.error("Error! la cantidad debe ser mayor a 0!", { duration: 5000 });
+      toast.error("Error! la cantidad debe ser mayor a 0!", {
+        duration: 5000,
+      });
       return;
     }
 
@@ -56,8 +66,8 @@ const FormInvoice = () => {
         id: productSelected.id,
         name: productSelected.name,
         price: productSelected.price,
-        quantity: Number(quantity),
-        total: productSelected.price * Number(quantity),
+        quantity: newValue,
+        total: productSelected.price * newValue,
       };
 
       setDetails([...details, detail]);
@@ -69,10 +79,12 @@ const FormInvoice = () => {
   };
 
   const saveNewPurshase = async () => {
-
     if (Number(total) === 0) {
-      toast.error("Error! Debe tener al menos un producto para efectuar la compra!", { duration: 5000 });
-      return 
+      toast.error(
+        "Error! Debe tener al menos un producto para efectuar la compra!",
+        { duration: 5000 }
+      );
+      return;
     }
 
     const dataInvoice: Purchase = {
@@ -108,7 +120,7 @@ const FormInvoice = () => {
       toast.success("Compra registrada con exito", { duration: 5000 });
       setDetails([]);
       setIsPaid(false);
-      setQuantity("0");
+      setQuantity(0);
       setTotal(0);
       setNumOperation("");
     }
@@ -179,20 +191,37 @@ const FormInvoice = () => {
                   disabled
                 />
               </div>
-              <div className='max-w-md'>
-                <div className='mb-2 block'>
-                  <Label htmlFor='quantity' value='Cantidad a Comprar' />
+              {productSelected?.sell_by === "by_unit" ? (
+                <div className='max-w-md'>
+                  <div className='mb-2 block'>
+                    <Label htmlFor='quantity' value='Cantidad a Comprar' />
+                  </div>
+                  <TextInput
+                    id='quantity'
+                    value={quantity}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setQuantity(Number(e.target.value))
+                    }
+                    name='quantity'
+                    type='text'
+                  />
                 </div>
-                <TextInput
-                  id='quantity'
-                  value={quantity}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setQuantity(e.target.value)
-                  }
-                  name='quantity'
-                  type='text'
-                />
-              </div>
+              ) : (
+                <div className='max-w-md'>
+                  <div className='mb-2 block'>
+                    <Label htmlFor='quantity' value='Cantidad en Gramos' />
+                  </div>
+                  <TextInput
+                    id='quantity'
+                    value={quantity}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setQuantity(Number(e.target.value));
+                    }}
+                    name='quantity'
+                    type='text'
+                  />
+                </div>
+              )}
               <Button
                 onClick={addRowDetailInvoice}
                 outline

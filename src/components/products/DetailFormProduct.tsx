@@ -115,7 +115,7 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
                 <Select
                   id='sell_by'
                   onChange={updateSellBy}
-                  defaultValue={product?.sellBy}
+                  value={product?.sellBy}
                   name='sell_by'
                 >
                   <option value={"by_kilo"}>Por Kilo</option>

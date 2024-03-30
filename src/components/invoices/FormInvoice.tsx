@@ -74,8 +74,10 @@ const FormInvoice = () => {
         id: productSelected.id,
         name: productSelected.name,
         price: productSelected.price,
-        quantity: newValue,
-        total: productSelected.price * newValue,
+        quantity: !isByUnit ? newValue : quantity,
+        total: !isByUnit
+          ? Number(Number(productSelected.price * newValue).toFixed(2))
+          : Number(Number(productSelected.price * quantity).toFixed(2)),
       };
 
       setDetails([...details, detail]);
@@ -153,8 +155,8 @@ const FormInvoice = () => {
         }
 
         setDisabledClient(true);
-        setClientId( __rs.id );
-        setFullNameClient(__rs.fullName)
+        setClientId(__rs.id);
+        setFullNameClient(__rs.fullName);
       })
       .catch((__err) => {
         setIsLoading(false);
@@ -402,7 +404,7 @@ const FormInvoice = () => {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell>
-                      <strong>Total a Pagar:</strong> {total}
+                      <strong>Total a Pagar:</strong> {Number(total).toFixed(2)}
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>

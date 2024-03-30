@@ -124,6 +124,9 @@ export interface Purchase {
   status: boolean;
   payment_method: string;
   num_operation?: string;
+  full_name_client?: string;
+  identification?: string;
+  client_id?: number
 }
 
 export interface Detail {

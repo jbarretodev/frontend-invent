@@ -140,6 +140,9 @@ const FormInvoice = () => {
       setQuantity(0);
       setTotal(0);
       setNumOperation("");
+      setClientId(0);
+      setFullNameClient("");
+      setIdentification("");
     }
   };
 

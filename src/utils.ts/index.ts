@@ -3,10 +3,12 @@ import {
   DataListOperationRow,
   ListInvoices,
   PurchaseRow,
+  ListClient,
+  ListClientTable,
+  Client,
 } from "./../@types/index.d";
 import dayjs from "dayjs";
 import { DataProductRow, ListOperationHistory, Product } from "../@types";
-//import { Navigate } from "react-router-dom";
 
 export const checkLoginUser = () => {
   const user = localStorage.getItem("user");
@@ -67,6 +69,19 @@ export const getFieldsTableListPurchase = (
       date: purchase.createdAt.split("T")[0],
       num_operation: purchase.numOperation ?? "",
       total: Number(purchase.totalInvoice),
+    };
+  });
+};
+
+export const getFieldsTableClient = (
+  listClient: ListClient
+): ListClientTable => {
+  return listClient.map((client: Client) => {
+    return {
+      fullName: client.fullName,
+      phone: client.phone ?? "",
+      identification: client.identification,
+      createdAt: client.createdAt,
     };
   });
 };

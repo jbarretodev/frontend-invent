@@ -126,7 +126,7 @@ export interface Purchase {
   num_operation?: string;
   full_name_client?: string;
   identification?: string;
-  client_id?: number
+  client_id?: number;
 }
 
 export interface Detail {
@@ -200,3 +200,23 @@ export interface Consolidate {
   invoices_not_paid: number;
   invoices_paid: number;
 }
+
+export type ListClient = Client[];
+
+export interface Client {
+  id: number;
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ClientTable {
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+}
+
+export type ListClientTable = ClientTable[];

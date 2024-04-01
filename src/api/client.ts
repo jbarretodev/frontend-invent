@@ -13,4 +13,14 @@ export default class ClientRequest {
       return undefined;
     }
   }
+
+  static async getAllClient() {
+    try {
+      const rsRequest = await axiosInstance.get("/clients/all/no-invoice");
+
+      return rsRequest.data;
+    } catch (error) {
+      return undefined;
+    }
+  }
 }

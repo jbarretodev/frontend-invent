@@ -9,6 +9,7 @@ import {
   HiOutlineClipboardList,
   HiShoppingCart,
   HiCreditCard,
+  HiOutlineUsers,
 } from "react-icons/hi";
 import { logOut } from "../../utils.ts";
 const BeSide = () => {
@@ -20,19 +21,20 @@ const BeSide = () => {
             <Sidebar.Item href='/dashboard' icon={HiChartPie}>
               Dashboard
             </Sidebar.Item>
-            <Sidebar.Collapse label='Ventas' href='#' icon={HiCreditCard}>
-              <Sidebar.Item href='/dashboard/invoice'>
+
+            <Sidebar.Collapse label="Ventas" href="#" icon={HiCreditCard}>
+              <Sidebar.Item href="/dashboard/invoice">
                 Registrar Venta
               </Sidebar.Item>
-              <Sidebar.Item href='/dashboard/invoice/list'>
+              <Sidebar.Item href="/dashboard/invoice/list">
                 Listado de Ventas
               </Sidebar.Item>
-              <Sidebar.Item href='/dashboard/invoice/consolidate'>
+              <Sidebar.Item href="/dashboard/invoice/consolidate">
                 Ventas Consolidadas
               </Sidebar.Item>
             </Sidebar.Collapse>
-            <Sidebar.Collapse label='Productos' href='#' icon={HiShoppingCart}>
-              <Sidebar.Item href='/dashboard/products'>
+            <Sidebar.Collapse label="Productos" href="#" icon={HiShoppingCart}>
+              <Sidebar.Item href="/dashboard/products">
                 Registrar Productos
               </Sidebar.Item>
             </Sidebar.Collapse>
@@ -44,10 +46,13 @@ const BeSide = () => {
               <Sidebar.Item href='/dashboard/invent'>
                 Registrar Actividad
               </Sidebar.Item>
-              <Sidebar.Item href='/dashboard/invent/list'>
-                Listado de Inventario
+              <Sidebar.Item href="/dashboard/invent/list">
+                Listado de Actividades
               </Sidebar.Item>
             </Sidebar.Collapse>
+            <Sidebar.Item href="/dashboard/clients" icon={HiOutlineUsers}>
+              Clientes
+            </Sidebar.Item>
             {/* <Sidebar.Item href='#' icon={HiInbox} label='3'>
               Inbox
             </Sidebar.Item>
@@ -55,7 +60,7 @@ const BeSide = () => {
               Users
             </Sidebar.Item> */}
             <Sidebar.Item
-              href='#'
+              href="#"
               icon={HiArrowSmRight}
               onClick={() => {
                 logOut();

@@ -39,7 +39,7 @@ export interface ProductCreate {
   name: string;
   quantity: number;
   price: number;
-  sell_by:string
+  sell_by: string;
 }
 
 export interface ListProducts {
@@ -48,7 +48,7 @@ export interface ListProducts {
 
 export interface Product {
   name: string;
-  sellBy:string
+  sell_by: string;
   quantity: number;
   code: string;
   price: number;
@@ -80,6 +80,7 @@ export interface HistoryProduct {
   quantity: number;
   typeOp: number;
   productId: number;
+  date: string;
   userId: number;
   createdAt: string;
   updatedAt: string;
@@ -123,6 +124,9 @@ export interface Purchase {
   status: boolean;
   payment_method: string;
   num_operation?: string;
+  full_name_client?: string;
+  identification?: string;
+  client_id?: number;
 }
 
 export interface Detail {
@@ -148,9 +152,24 @@ export interface InvoiceResponse {
   status: boolean;
   createdAt: string;
   updatedAt: string;
+  date: string;
   paymentMethod: string;
   numOperation?: string;
   user: User;
+  client_id?: number;
+}
+
+export interface InvoiceCli {
+  id: number;
+  totalInvoice: string;
+  userId: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+  paymentMethod: string;
+  numOperation?: string;
+  date: string;
+  client_id: number;
 }
 
 export interface PurchaseRow {
@@ -196,4 +215,34 @@ export interface Consolidate {
   invoices_not_paid: number;
   invoices_paid: number;
 }
-21 de marzo de 2024
+
+export type ListClient = Client[];
+
+export interface Client {
+  id: number;
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ClientInvoices {
+  id: number;
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+  updatedAt: string;
+  invoices: InvoiceCli[];
+}
+
+export interface ClientTable {
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+  id: number;
+}
+
+export type ListClientTable = ClientTable[];

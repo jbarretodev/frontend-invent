@@ -16,7 +16,7 @@ export default class OperationInventory {
     );
   }
 
-  static async listOperationHistory() {
-    return await axiosInstance.get<ListOperationHistory>("history-product");
+  static async listOperationHistory(date:string) {
+    return await axiosInstance.get<ListOperationHistory>(`history-product?date=${date}`);
   }
 }

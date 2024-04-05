@@ -21,6 +21,14 @@ const InventoryForm = () => {
   };
 
   const sendOperation = async () => {
+
+    if (operation.quantity === 0) {
+      toast.error("Ingrese la cantidad del producto!", {
+        duration: 5000,
+      })
+      return 
+    }
+
     const rs = await OperationInventory.saveOperation(operation);
 
     if (rs.status === 201) {

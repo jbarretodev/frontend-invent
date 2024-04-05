@@ -6,7 +6,13 @@ import { getFieldsTableListOperations } from "../../utils.ts";
 import { HiArrowNarrowRight, HiArrowNarrowLeft } from "react-icons/hi";
 import { Card } from "flowbite-react";
 
-const ListInvotory = () => {
+import dayjs from "dayjs";
+interface DateListOperationProp {
+  date: string;
+}
+
+
+const ListInvotory = ({ date }: DateListOperationProp) => {
   const [listOperation, setListOperation] = useState<DataListOperationRow[]>(
     []
   );
@@ -47,7 +53,7 @@ const ListInvotory = () => {
   ];
 
   useEffect(() => {
-    OperationInventory.listOperationHistory()
+    OperationInventory.listOperationHistory(dayjs(date).format("YYYY-MM-DD"))
       .then((rs) => {
         if (
           rs.data.historyOperations.length > 0 &&
@@ -58,14 +64,11 @@ const ListInvotory = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [date]);
 
   return (
     <>
-      <h3 className='text-3xl font-bold mb-4 text-center mt-10'>
-        Listado de Actividad del Inventario
-      </h3>
-      <Card>
+      <Card className='mt-10'>
         <DataTable
           title={"Historial de Inventario"}
           columns={columns}

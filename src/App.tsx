@@ -12,6 +12,9 @@ import ListInvoicePage from "./pages/ListInvoicePage";
 import DetailInvoice from "./pages/DetailInvoicePage";
 import InvoiceConsolidatePage from "./pages/InvoiceConsolidatePage";
 import DetailProductPage from "./pages/DetailProductPage";
+import ClientPage from "./pages/ClientPage";
+import Page404 from "./pages/page404";
+import InvoiceByClientPage from "./pages/InvoiceByClientPage";
 
 function App() {
   return (
@@ -19,24 +22,31 @@ function App() {
       <Toaster />
       <BrowserRouter>
         <Routes>
-          <Route path='dashboard' element={<ProtectedRoute />}>
-            <Route path='' element={<MainAdmin />} />
-            <Route path='products' element={<ProductPage />} />
-            <Route path='products/:id' element={<DetailProductPage />} />
-            <Route path='invent' element={<InventPage />} />
+          <Route path="dashboard" element={<ProtectedRoute />}>
+            <Route path="" element={<MainAdmin />} />
+            <Route path="products" element={<ProductPage />} />
+            <Route path="products/:id" element={<DetailProductPage />} />
+            <Route path="invent" element={<InventPage />} />
             <Route
-              path='invent/list'
+              path="invent/list"
               element={<ListOperationInventoryPage />}
             />
-            <Route path='invoice' element={<InvoicePage />}></Route>
-            <Route path='invoice/list' element={<ListInvoicePage />}></Route>
-            <Route path='invoice/:id' element={<DetailInvoice />}></Route>
+
+            <Route path="invoice" element={<InvoicePage />}></Route>
+            <Route path="clients" element={<ClientPage />}></Route>
             <Route
-              path='invoice/consolidate'
+              path="clients/:id/invoice"
+              element={<InvoiceByClientPage />}
+            ></Route>
+            <Route path="invoice/list" element={<ListInvoicePage />}></Route>
+            <Route path="invoice/:id" element={<DetailInvoice />}></Route>
+            <Route
+              path="invoice/consolidate"
               element={<InvoiceConsolidatePage />}
             ></Route>
           </Route>
-          <Route path='/' element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </>

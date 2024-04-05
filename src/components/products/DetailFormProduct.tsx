@@ -16,7 +16,7 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
     createdAt: "",
     quantity: 0,
     id: 0,
-    sellBy: "",
+    sell_by: "",
     updatedAt: "",
   });
 
@@ -44,7 +44,7 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
   };
 
   const triggerUpdateSellBy = () => {
-    ProductRequest.updateSellByProduct(product.id, product.sellBy).then(
+    ProductRequest.updateSellByProduct(product.id, product.sell_by).then(
       (__rs) =>
         toast.success("Mode de Venta Actualizado Exitosamente", {
           duration: 5000,
@@ -115,7 +115,7 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
                 <Select
                   id='sell_by'
                   onChange={updateSellBy}
-                  defaultValue={product?.sellBy}
+                  value={product?.sell_by}
                   name='sell_by'
                 >
                   <option value={"by_kilo"}>Por Kilo</option>

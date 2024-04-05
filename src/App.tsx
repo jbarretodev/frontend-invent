@@ -13,6 +13,8 @@ import DetailInvoice from "./pages/DetailInvoicePage";
 import InvoiceConsolidatePage from "./pages/InvoiceConsolidatePage";
 import DetailProductPage from "./pages/DetailProductPage";
 import ClientPage from "./pages/ClientPage";
+import Page404 from "./pages/page404";
+import InvoiceByClientPage from "./pages/InvoiceByClientPage";
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
             />
             <Route path="invoice" element={<InvoicePage />}></Route>
             <Route path="clients" element={<ClientPage />}></Route>
+            <Route path="clients/:id/invoice" element={<InvoiceByClientPage />}></Route>
             <Route path="invoice/list" element={<ListInvoicePage />}></Route>
             <Route path="invoice/:id" element={<DetailInvoice />}></Route>
             <Route
@@ -39,6 +42,7 @@ function App() {
             ></Route>
           </Route>
           <Route path="/" element={<LoginPage />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -3,12 +3,14 @@ import ClientRequest from "../../api/client";
 import type { ListClient, ListClientTable } from "../../@types";
 import { getFieldsTableClient } from "../../utils.ts";
 import DataTable, { TableColumn } from "react-data-table-component";
+import CustomCell from "../shared/CustomCell.tsx";
 
 interface ClientRow {
   fullName: string;
   identification: string;
   phone?: string;
   createdAt: string;
+  id: number;
 }
 
 const ListClient = () => {
@@ -35,6 +37,18 @@ const ListClient = () => {
       name: "Fecha Creacion",
       selector: (row) => row.createdAt.split("T")[0],
       sortable: true,
+    },
+    {
+      name: "Detalle de Compras",
+      selector: (row) => row.id,
+      cell: (row) => (
+        <CustomCell
+          id={row.id}
+          message="Ver Compras"
+          route={ `/dashboard/clients/${ row.id }/invoice` }
+          type={1}
+        />
+      ),
     },
   ];
 

@@ -6,6 +6,7 @@ import {
   ListClient,
   ListClientTable,
   Client,
+  InvoiceCli,
 } from "./../@types/index.d";
 import dayjs from "dayjs";
 import { DataProductRow, ListOperationHistory, Product } from "../@types";
@@ -82,6 +83,20 @@ export const getFieldsTableClient = (
       phone: client.phone ?? "",
       identification: client.identification,
       createdAt: client.createdAt,
+      id: client.id,
+    };
+  });
+};
+
+export const getFieldsClientInvoices = (invoices: InvoiceCli[]) => {
+  return invoices.map((invoice) => {
+    return {
+      id: invoice.id,
+      status: invoice.status,
+      total: Number(invoice.totalInvoice),
+      num_operation: invoice.numOperation,
+      date: invoice.date,
+      paymentMethod: invoice.paymentMethod,
     };
   });
 };

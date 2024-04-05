@@ -152,9 +152,24 @@ export interface InvoiceResponse {
   status: boolean;
   createdAt: string;
   updatedAt: string;
+  date: string;
   paymentMethod: string;
   numOperation?: string;
   user: User;
+  client_id?: number;
+}
+
+export interface InvoiceCli {
+  id: number;
+  totalInvoice: string;
+  userId: number;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+  paymentMethod: string;
+  numOperation?: string;
+  date: string;
+  client_id: number;
 }
 
 export interface PurchaseRow {
@@ -212,11 +227,22 @@ export interface Client {
   updatedAt: string;
 }
 
+export interface ClientInvoices {
+  id: number;
+  fullName: string;
+  identification: string;
+  phone?: string;
+  createdAt: string;
+  updatedAt: string;
+  invoices: InvoiceCli[];
+}
+
 export interface ClientTable {
   fullName: string;
   identification: string;
   phone?: string;
   createdAt: string;
+  id: number;
 }
 
 export type ListClientTable = ClientTable[];

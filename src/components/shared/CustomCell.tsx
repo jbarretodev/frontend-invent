@@ -1,17 +1,21 @@
-//import React from 'react'
-//import { useState } from "react";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 interface CustomCellProps {
   id: number;
-  route: string;
+  route?: string;
   message: string;
   type?: number; // 1 to list invoice by clients
+  handlerClick?: () => void;
 }
 
-const CustomCell = ({ id, route, message, type }: CustomCellProps) => {
-  //const [url, setUrl] = useState<string>(`${route}/${id}`);
+const CustomCell = ({
+  id,
+  route,
+  message,
+  type,
+  handlerClick,
+}: CustomCellProps) => {
   let url: string = "";
 
   switch (type) {
@@ -24,7 +28,11 @@ const CustomCell = ({ id, route, message, type }: CustomCellProps) => {
   return (
     <>
       <Button outline gradientDuoTone="purpleToBlue">
-        <Link to={url}>{message}</Link>
+        {route ? (
+          <Link to={url}>{message}</Link>
+        ) : (
+          <span onClick={handlerClick}>{message}</span>
+        )}
       </Button>
     </>
   );

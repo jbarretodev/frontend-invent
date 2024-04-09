@@ -246,3 +246,8 @@ export interface ClientTable {
 }
 
 export type ListClientTable = ClientTable[];
+
+export interface InvoiceFilePDF
+{
+  file: string;
+}

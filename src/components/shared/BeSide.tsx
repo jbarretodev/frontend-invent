@@ -11,6 +11,7 @@ import {
   HiCreditCard,
   HiOutlineUsers,
 } from "react-icons/hi";
+import { FaStore } from "react-icons/fa6";
 import { logOut } from "../../utils.ts";
 const BeSide = () => {
   return (
@@ -52,6 +53,9 @@ const BeSide = () => {
             </Sidebar.Collapse>
             <Sidebar.Item href="/dashboard/clients" icon={HiOutlineUsers}>
               Clientes
+            </Sidebar.Item>
+            <Sidebar.Item href="/dashboard/clients" icon={FaStore}>
+              Info. del Comercio
             </Sidebar.Item>
             {/* <Sidebar.Item href='#' icon={HiInbox} label='3'>
               Inbox

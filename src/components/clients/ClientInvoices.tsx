@@ -3,6 +3,10 @@ import { Card } from "flowbite-react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import CustomCell from "../shared/CustomCell";
 import { getFieldsClientInvoices } from "../../utils.ts";
+import InvoiceRequest from "../../api/Invoice.ts";
+import toast from "react-hot-toast";
+import { Spinner } from "flowbite-react";
+import { useState } from "react";
 
 type ClientInvoiceProp = {
   fullName: string;
@@ -19,10 +23,24 @@ type DataRowClientInvoice = {
 };
 
 const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const generateeinvoice = async (id: number) => {
+    setIsLoading(true);
+    const rsRequest = await InvoiceRequest.generateInvoicePdf(id);
+
+    if (!rsRequest) {
+      toast.error("Error al generar la factura", { duration: 5000 });
+      return;
+    }
+
+    await InvoiceRequest.getInvoice(rsRequest);
+    setIsLoading(false);
+  };
+
   const columns: TableColumn<DataRowClientInvoice>[] = [
     {
       name: "Numero de Operacion",
-      selector: (row) => row.num_operation || '',
+      selector: (row) => row.num_operation || "",
       sortable: true,
     },
     {
@@ -49,7 +67,24 @@ const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
       name: "Detalles",
       selector: (row) => row.id,
       cell: (row) => (
-        <CustomCell type={1} id={row.id} message="Detalles" route={`/dashboard/invoice/${row.id}`} />
+        <CustomCell
+          type={1}
+          id={row.id}
+          message="Detalles"
+          route={`/dashboard/invoice/${row.id}`}
+        />
+      ),
+    },
+    {
+      name: "Factura",
+      selector: (row) => row.id,
+      cell: (row) => (
+        <CustomCell
+          type={1}
+          id={row.id}
+          message="Imprimir"
+          handlerClick={async () => await generateeinvoice(Number(row.id))}
+        />
       ),
     },
   ];
@@ -59,10 +94,16 @@ const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
   return (
     <>
       <Card>
+        <div className="text-center">
+          {isLoading && (
+            <Spinner size="xl" aria-label="Center-aligned spinner example" />
+          )}
+        </div>
         <DataTable
           title={`Listado de compras de ${fullName}`}
           columns={columns}
-          data={dataTable}
+          data={ dataTable }
+          pagination
         />
       </Card>
     </>

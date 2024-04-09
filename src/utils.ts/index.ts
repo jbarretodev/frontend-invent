@@ -10,7 +10,6 @@ import {
 } from "./../@types/index.d";
 import dayjs from "dayjs";
 import { DataProductRow, ListOperationHistory, Product } from "../@types";
-//import { Navigate } from "react-router-dom";
 
 export const checkLoginUser = () => {
   const user = localStorage.getItem("user");

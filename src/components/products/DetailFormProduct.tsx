@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Label, TextInput, Card, Select } from "flowbite-react";
+import {
+  Button,
+  Label,
+  TextInput,
+  Card,
+  Select,
+  ToggleSwitch,
+} from "flowbite-react";
 import ProductRequest from "../../api/products";
 import { Product } from "../../@types";
 import toast from "react-hot-toast";
@@ -9,6 +16,7 @@ interface DetailProductProp {
 }
 
 const DetailFormProduct = ({ id }: DetailProductProp) => {
+  const [throwRequest, setThrowRequest] = useState<boolean>(false);
   const [product, setProduct] = useState<Product>({
     code: "",
     name: "",
@@ -16,8 +24,9 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
     createdAt: "",
     quantity: 0,
     id: 0,
-    sellBy: "",
+    sell_by: "",
     updatedAt: "",
+    exempt: false,
   });
 
   useEffect(() => {
@@ -25,6 +34,24 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
       .then((rs) => setProduct(rs.data))
       .catch((err) => console.log(err));
   }, [id]);
+
+  useEffect(() => {
+    if (throwRequest) {
+      ProductRequest.updateExempt(product.id, product.exempt)
+        .then((__rs) => {
+          setThrowRequest(false);
+          toast.success(
+            product.exempt
+              ? "Se le aplico iva al producto exitosamente!"
+              : "Se le removio el iva al producto exitosamente",
+            {
+              duration: 5000,
+            }
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [throwRequest]);
 
   const triggerUpdatePrice = () => {
     ProductRequest.updatePriceProduct(product.id, Number(product.price)).then(
@@ -44,9 +71,9 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
   };
 
   const triggerUpdateSellBy = () => {
-    ProductRequest.updateSellByProduct(product.id, product.sellBy).then(
+    ProductRequest.updateSellByProduct(product.id, product.sell_by).then(
       (__rs) =>
-        toast.success("Mode de Venta Actualizado Exitosamente", {
+        toast.success("Modo de Venta Actualizado Exitosamente", {
           duration: 5000,
         })
     );
@@ -68,61 +95,72 @@ const DetailFormProduct = ({ id }: DetailProductProp) => {
 
   return (
     <>
-      <div className='flex justify-center items-center h-full mb-10'>
-        <Card className='w-full md:max-w-xl flex flex-col gap-4 p-4'>
-          <form className='flex flex-col gap-4'>
-            <div className='grid md:grid-cols-2'>
+      <div className="flex justify-center items-center h-full mb-10">
+        <Card className="w-full md:max-w-xl flex flex-col gap-4 p-4">
+          <form className="flex flex-col gap-4">
+            <div className="mt-3">
+              <ToggleSwitch
+                checked={product.exempt}
+                label="Aplicar Iva para este Producto"
+                name="exempt"
+                onChange={() => {
+                  setProduct({ ...product, exempt: !product.exempt });
+                  setThrowRequest(true);
+                }}
+              />
+            </div>
+            <div className="grid md:grid-cols-2">
               <div>
-                <Label htmlFor='name' value='Nombre del producto' />
+                <Label htmlFor="name" value="Nombre del producto" />
                 <TextInput
-                  name='name'
+                  name="name"
                   value={product?.name}
                   onChange={updateName}
-                  id='name'
-                  type='text'
-                  placeholder=''
+                  id="name"
+                  type="text"
+                  placeholder=""
                   shadow
                 />
               </div>
-              <div onClick={triggerUpdateName} className='mt-6'>
+              <div onClick={triggerUpdateName} className="mt-6">
                 <Button>Actualizar Nombre</Button>
               </div>
             </div>
 
-            <div className='grid md:grid-cols-2'>
+            <div className="grid md:grid-cols-2">
               <div>
-                <Label htmlFor='price' value='Precio del producto' />
+                <Label htmlFor="price" value="Precio del producto" />
                 <TextInput
-                  name='price'
+                  name="price"
                   value={product?.price}
                   onChange={updatePrice}
-                  id='price'
-                  type='text'
-                  placeholder='0.00'
+                  id="price"
+                  type="text"
+                  placeholder="0.00"
                   shadow
                 />
               </div>
-              <div className='mt-6'>
+              <div className="mt-6">
                 <Button onClick={triggerUpdatePrice}>Actualizar Precio</Button>
               </div>
             </div>
 
-            <div className='grid md:grid-cols-2'>
+            <div className="grid md:grid-cols-2">
               <div>
-                <div className='mb-2 block'>
-                  <Label htmlFor='sell_by' value='Modo de Venta' />
+                <div className="mb-2 block">
+                  <Label htmlFor="sell_by" value="Modo de Venta" />
                 </div>
                 <Select
-                  id='sell_by'
+                  id="sell_by"
                   onChange={updateSellBy}
-                  value={product?.sellBy}
-                  name='sell_by'
+                  value={product?.sell_by}
+                  name="sell_by"
                 >
                   <option value={"by_kilo"}>Por Kilo</option>
                   <option value={"by_unit"}>Por Unidad</option>
                 </Select>
               </div>
-              <div className='mt-8 w-full'>
+              <div className="mt-8 w-full">
                 <Button onClick={triggerUpdateSellBy}>
                   Actualizar modo de Ventar
                 </Button>

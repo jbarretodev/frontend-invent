@@ -45,41 +45,41 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
 
   return (
     <>
-      <Card className='max-w-md'>
-        <h5 className='text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+      <Card className="max-w-md">
+        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Bienvenido a Invent
         </h5>
         <form
-          className='flex max-w-md flex-col gap-4'
+          className="flex max-w-md flex-col gap-4"
           onSubmit={(e) => {
             makeLogin(e);
           }}
         >
           <div>
-            <div className='mb-2 block'>
-              <Label htmlFor='email' value='Ingrese su Correo' />
+            <div className="mb-2 block">
+              <Label htmlFor="email" value="Ingrese su Correo" />
             </div>
             <TextInput
-              id='email1'
+              id="email1"
               onChange={(e) => setEmail(e.target.value)}
-              type='email'
-              placeholder='xxx@yyy.com'
+              type="email"
+              placeholder="xxx@yyy.com"
               required
             />
           </div>
           <div>
-            <div className='mb-2 block'>
-              <Label htmlFor='password' value='Ingrese tu Clave' />
+            <div className="mb-2 block">
+              <Label htmlFor="password" value="Ingrese tu Clave" />
             </div>
             <TextInput
-              id='password'
+              id="password"
               onChange={(e) => setPassword(e.target.value)}
-              type='password'
+              type="password"
               required
             />
           </div>
 
-          <Button type='submit' id='button-login'>
+          <Button type="submit" id="button-login">
             Iniciar Sesion!
           </Button>
         </form>

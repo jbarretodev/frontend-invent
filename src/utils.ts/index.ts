@@ -10,7 +10,6 @@ import {
 } from "./../@types/index.d";
 import dayjs from "dayjs";
 import { DataProductRow, ListOperationHistory, Product } from "../@types";
-import axios, { AxiosResponse } from "axios";
 
 export const checkLoginUser = () => {
   const user = localStorage.getItem("user");

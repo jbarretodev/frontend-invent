@@ -40,6 +40,7 @@ export interface ProductCreate {
   quantity: number;
   price: number;
   sell_by: string;
+  exempt: boolean;
 }
 
 export interface ListProducts {
@@ -55,6 +56,7 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
   id: number;
+  exempt: boolean;
 }
 
 export interface DataProductRow {
@@ -247,7 +249,14 @@ export interface ClientTable {
 
 export type ListClientTable = ClientTable[];
 
-export interface InvoiceFilePDF
-{
+export interface InvoiceFilePDF {
   file: string;
+}
+
+export interface IvaResponse {
+  active: boolean;
+  createdAt: Date;
+  id: number;
+  updatedAt: Date;
+  value: number;
 }

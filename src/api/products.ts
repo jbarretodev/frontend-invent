@@ -40,4 +40,10 @@ export default class ProductRequest {
       mode,
     });
   }
+
+  static async updateExempt(id: number, exempt: boolean) {
+    return await axiosInstance.patch<Product>(`products/${id}/update-exempt`, {
+      exempt: exempt,
+    });
+  }
 }

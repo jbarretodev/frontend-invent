@@ -1,4 +1,11 @@
-import { Button, Label, TextInput, Card, Select } from "flowbite-react";
+import {
+  Button,
+  Label,
+  TextInput,
+  Card,
+  Select,
+  ToggleSwitch,
+} from "flowbite-react";
 import React, { useState } from "react";
 import { ProductCreate } from "../../@types";
 import toast from "react-hot-toast";
@@ -14,6 +21,7 @@ const FormProduct: React.FC<FormProductProps> = ({ onProductAdded }) => {
     quantity: 0,
     price: 0,
     sell_by: "by_kilo",
+    exempt: false,
   });
 
   const handleInputChange = (
@@ -29,6 +37,7 @@ const FormProduct: React.FC<FormProductProps> = ({ onProductAdded }) => {
       quantity: 0,
       price: 0,
       sell_by: "",
+      exempt: false,
     });
   };
 
@@ -64,59 +73,67 @@ const FormProduct: React.FC<FormProductProps> = ({ onProductAdded }) => {
 
   return (
     <>
-      <div className='flex justify-center items-center h-full mb-10'>
-        <Card className='w-full md:max-w-xl flex flex-col gap-4 p-4'>
-          <form className='flex flex-col gap-4'>
+      <div className="flex justify-center items-center h-full mb-10">
+        <Card className="w-full md:max-w-xl flex flex-col gap-4 p-4">
+          <form className="flex flex-col gap-4">
             <div>
-              <Label htmlFor='name' value='Nombre del producto' />
+              <Label htmlFor="name" value="Nombre del producto" />
               <TextInput
                 value={product.name}
-                name='name'
+                name="name"
                 onChange={handleInputChange}
-                id='product'
-                type='text'
-                placeholder=''
+                id="product"
+                type="text"
+                placeholder=""
                 shadow
               />
             </div>
             <div>
-              <Label htmlFor='price' value='Precio del producto' />
+              <Label htmlFor="price" value="Precio del producto" />
               <TextInput
                 value={product.price}
-                name='price'
+                name="price"
                 onChange={handleInputChange}
-                id='price'
-                type='text'
-                placeholder='0.00'
+                id="price"
+                type="text"
+                placeholder="0.00"
                 shadow
               />
             </div>
             <div>
-              <Label htmlFor='quantity' value='Cantidad' />
+              <Label htmlFor="quantity" value="Cantidad" />
               <TextInput
-                id='quantity'
-                type='string'
-                name='quantity'
+                id="quantity"
+                type="string"
+                name="quantity"
                 value={product.quantity}
                 onChange={handleInputChange}
                 shadow
               />
             </div>
-            <div className='max-w-xl'>
-              <div className='mb-2 block'>
-                <Label htmlFor='sell_by' value='Modo de Venta' />
+            <div className="max-w-xl">
+              <div className="mb-2 block">
+                <Label htmlFor="sell_by" value="Modo de Venta" />
               </div>
               <Select
-                id='sell_by'
+                id="sell_by"
                 defaultValue={"by_kilo"}
-                name='sell_by'
+                name="sell_by"
                 onChange={handleInputChange}
               >
-                <option value={"by_kilo"}>
-                  Por Kilo
-                </option>
+                <option value={"by_kilo"}>Por Kilo</option>
                 <option value={"by_unit"}>Por Unidad</option>
               </Select>
+              <div className="mt-3">
+                <ToggleSwitch
+                  checked={product.exempt}
+                  label="Aplicar Iva para este Producto"
+                  name="exempt"
+                  onChange={() => {
+                    setProduct({ ...product, exempt: !product.exempt });
+                  }}
+                />
+              </div>
             </div>
             <Button onClick={submitFormProduct}>Registrar Producto</Button>
           </form>

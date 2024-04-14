@@ -13,12 +13,13 @@ const DetailInvoice = ({ id }: DetailInvoiceProp) => {
 
   useEffect(() => {
     InvoiceRequest.getInvoiceDetailById(id).then((rs) => setDetail(rs.data));
+    //.catch((err) => setDetail([]));
   }, [id]);
 
   return (
     <>
       <Card>
-        <div className='overflow-x-auto'>
+        <div className="overflow-x-auto">
           <Table>
             <Table.Head>
               <Table.HeadCell>Responsable</Table.HeadCell>
@@ -26,30 +27,38 @@ const DetailInvoice = ({ id }: DetailInvoiceProp) => {
               <Table.HeadCell>Status</Table.HeadCell>
               <Table.HeadCell>Fecha</Table.HeadCell>
               <Table.HeadCell>Num. Operacion</Table.HeadCell>
+              <Table.HeadCell>Total Neto</Table.HeadCell>
+              <Table.HeadCell>SubTotal</Table.HeadCell>
               <Table.HeadCell>Total</Table.HeadCell>
             </Table.Head>
-            <Table.Body className='divide-y'>
-              <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                  {detail?.user.fullName}
-                </Table.Cell>
-                <Table.Cell>{detail?.paymentMethod}</Table.Cell>
-                <Table.Cell>
-                  {detail?.status ? "PAGADA" : "NO PAGADO"}
-                </Table.Cell>
-                <Table.Cell>{detail?.date}</Table.Cell>
-                <Table.Cell>{detail?.numOperation}</Table.Cell>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
-                  {detail?.totalInvoice}
-                </Table.Cell>
-              </Table.Row>
+            <Table.Body className="divide-y">
+              {detail && (
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {detail?.user.fullName}
+                  </Table.Cell>
+                  <Table.Cell>{detail?.paymentMethod}</Table.Cell>
+                  <Table.Cell>
+                    {detail?.status ? "PAGADA" : "NO PAGADO"}
+                  </Table.Cell>
+                  <Table.Cell>{detail?.date}</Table.Cell>
+                  <Table.Cell>{detail?.numOperation}</Table.Cell>
+                  <Table.Cell>
+                    {Number(detail?.totalInvoice - detail?.subtotal).toFixed(2)}
+                  </Table.Cell>
+                  <Table.Cell>{detail?.subtotal}</Table.Cell>
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {detail?.totalInvoice}
+                  </Table.Cell>
+                </Table.Row>
+              )}
             </Table.Body>
           </Table>
         </div>
       </Card>
-      <hr className='pt-4 pb-4' />
-      <Card className='max-h-[350px] overflow-y-scroll'>
-        <div className='overflow-x-auto'>
+      <hr className="pt-4 pb-4" />
+      <Card className="max-h-[350px] overflow-y-scroll">
+        <div className="overflow-x-auto">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Nombre del Producto</Table.HeadCell>
@@ -57,11 +66,11 @@ const DetailInvoice = ({ id }: DetailInvoiceProp) => {
               <Table.HeadCell>Unit. Precio</Table.HeadCell>
               <Table.HeadCell>Total por Producto</Table.HeadCell>
             </Table.Head>
-            <Table.Body className='divide-y'>
+            <Table.Body className="divide-y">
               {detail &&
                 detail.detail_invoice.map((invoice, index) => (
                   <Table.Row key={index}>
-                    <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>
+                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                       {invoice.products.name}
                     </Table.Cell>
                     <Table.Cell>{invoice.quantity}</Table.Cell>

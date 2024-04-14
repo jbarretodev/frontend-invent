@@ -32,7 +32,7 @@ const InventoryForm = () => {
     const rs = await OperationInventory.saveOperation(operation);
 
     if (rs.status === 201) {
-      toast.success("Operacion registrada exitosamente", { duration: 5000 });
+      toast.success("Operación registrada exitosamente", { duration: 5000 });
       setOperation({
         type_op: 0,
         quantity: 0,
@@ -41,7 +41,7 @@ const InventoryForm = () => {
     }
 
     if (rs.status === 400) {
-      toast.error("No suficiente cantidad para esta operacion!", {
+      toast.error("No hay suficiente cantidad para esta operación!", {
         duration: 5000,
       });
       setOperation({
@@ -99,7 +99,7 @@ const InventoryForm = () => {
             </div>
 
             <div className='mb-4'>
-              <Label htmlFor='action' value='Seleccione la operacion' />
+              <Label htmlFor='action' value='Seleccione la operación' />
               <Select defaultValue={1} onChange={handleInputChange} name='type_op' id='action'>
                 <option value={1}>Agregar</option>
                 <option value={0}>

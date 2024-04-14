@@ -9,9 +9,7 @@ interface AutoCompleteProp {
 const AutoCompleteSearchProduct: React.FC<AutoCompleteProp> = ({
   listProducts,
   onProductSelected,
-}: AutoCompleteProp ) =>
-{
-  
+}: AutoCompleteProp) => {
   useEffect(() => {
     onProductSelected(listProducts.products[0]);
   }, [listProducts]);
@@ -23,11 +21,11 @@ const AutoCompleteSearchProduct: React.FC<AutoCompleteProp> = ({
 
   return (
     <>
-      <div className='max-w-md'>
-        <div className='mb-2 block'>
-          <Label htmlFor='prod' value='seleccione el producto!' />
+      <div className="max-w-md">
+        <div className="mb-2 block">
+          <Label htmlFor="prod" value="seleccione el producto" />
         </div>
-        <Select id='countries' onChange={setProductOnChange}>
+        <Select id="countries" onChange={setProductOnChange}>
           {listProducts.products.map((product) => (
             <option key={product.id} value={JSON.stringify(product)}>
               {product.name}

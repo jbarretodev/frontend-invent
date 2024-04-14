@@ -3,7 +3,7 @@ import { DataListOperationRow } from "../../@types";
 import OperationInventory from "../../api/OperationEnventory";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { getFieldsTableListOperations } from "../../utils.ts";
-import { HiArrowNarrowRight, HiArrowNarrowLeft } from "react-icons/hi";
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { Card } from "flowbite-react";
 import dayjs from "dayjs";
 interface DateListOperationProp {
@@ -32,14 +32,14 @@ const ListInvotory = ({ date }: DateListOperationProp) => {
       sortable: true,
     },
     {
-      name: "Tipo de Operacion",
+      name: "Tipo de Operación",
       selector: (row) => row.type_operation,
       sortable: true,
       cell: (row) =>
         row.type_operation === 1 ? (
-          <HiArrowNarrowRight />
+          <FaArrowAltCircleRight className="text-green-500 text-2xl" />
         ) : (
-          <HiArrowNarrowLeft />
+          <FaArrowAltCircleLeft className="text-red-600 text-2xl" />
         ),
     },
     {
@@ -66,14 +66,14 @@ const ListInvotory = ({ date }: DateListOperationProp) => {
 
   return (
     <>
-      <Card className='mt-10'>
+      <Card className="mt-10">
         <DataTable
           title={"Historial de Inventario"}
           columns={columns}
           data={listOperation || []}
           pagination
           fixedHeader
-          fixedHeaderScrollHeight='550px'
+          fixedHeaderScrollHeight="550px"
         />
       </Card>
     </>

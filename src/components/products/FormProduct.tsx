@@ -43,7 +43,7 @@ const FormProduct: React.FC<FormProductProps> = ({ onProductAdded }) => {
 
   const submitFormProduct = async () => {
     if (product.name.trim() === "") {
-      toast.error("Error el nombre del producto no puede quedar vacio");
+      toast.error("Error el nombre del producto no puede quedar vacío");
       return false;
     }
 

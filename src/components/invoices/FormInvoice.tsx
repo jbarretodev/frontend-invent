@@ -139,7 +139,7 @@ const FormInvoice = () => {
     });
 
     if (isPaid && numOperation.trim() === "") {
-      toast.error("Error! si fue pagada debe meter el numero de operacion!", {
+      toast.error("Error! si fue pagada debe introducir el número de operación!", {
         duration: 5000,
       });
 
@@ -152,7 +152,7 @@ const FormInvoice = () => {
     });
 
     if (rsPurchase.status === 201) {
-      toast.success("Compra registrada con exito", { duration: 5000 });
+      toast.success("Compra registrada con éxito", { duration: 5000 });
       setDetails([]);
       setExempts([]);
       setSubTotal(0.0);
@@ -307,7 +307,7 @@ const FormInvoice = () => {
               <hr />
               <div className="max-w-md">
                 <div className="mb-2 block">
-                  <Label htmlFor="product" value="Identificacion del Cliente" />
+                  <Label htmlFor="product" value="Identificación del Cliente" />
                 </div>
                 <TextInput
                   id="identification"
@@ -344,7 +344,7 @@ const FormInvoice = () => {
               </div>
               <div className="max-w-md">
                 <div className="mb-2 block">
-                  <Label htmlFor="type_operation" value="Tipo de Operacion" />
+                  <Label htmlFor="type_operation" value="Tipo de Operación" />
                 </div>
                 <Select
                   name="type_operation"
@@ -363,7 +363,7 @@ const FormInvoice = () => {
               </div>
               <div className="max-w-md">
                 <div className="mb-2 block">
-                  <Label htmlFor="num_operation" value="Numero de Operacion" />
+                  <Label htmlFor="num_operation" value="Numero de Operación" />
                 </div>
                 <TextInput
                   value={numOperation}

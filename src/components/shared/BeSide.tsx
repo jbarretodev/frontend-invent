@@ -69,7 +69,7 @@ const BeSide = () => {
                 logOut();
               }}
             >
-              Cerrar Sesion
+              Cerrar Sesión
             </Sidebar.Item>
             {/* <Sidebar.Item href="#" icon={HiTable}>
               Sign Up

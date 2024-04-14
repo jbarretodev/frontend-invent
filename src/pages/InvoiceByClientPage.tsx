@@ -22,7 +22,7 @@ const InvoiceByClientPage = () => {
     <>
       <DashboardLayout>
         <h3 className="text-3xl font-bold mb-4 text-center mb-20 mt-20">
-          Listado de compras del {clientInvoice?.fullName}
+          Listado de compras del cliente: {clientInvoice?.fullName}
         </h3>
         {clientInvoice && <ClientInvoicesComponent fullName={clientInvoice.fullName} invoices={clientInvoice.invoices} />}
       </DashboardLayout>

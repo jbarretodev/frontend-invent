@@ -21,12 +21,12 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
     e.preventDefault();
 
     if (email.trim() === "") {
-      toast.error("Error! Email vacio");
+      toast.error("Error! Email vacío");
       return;
     }
 
     if (password.trim() === "") {
-      toast.error("Error! password vacio");
+      toast.error("Error! password vacío");
       return;
     }
 

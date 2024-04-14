@@ -20,7 +20,7 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
       sortable: true,
     },
     {
-      name: "Metodo de Pago",
+      name: "Método de Pago",
       selector: (row) => row.method,
       sortable: true,
     },
@@ -35,7 +35,7 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
       sortable: true,
     },
     {
-      name: "Numero de Operacion",
+      name: "Número de Operación",
       selector: (row) => row.num_operation,
       sortable: true,
     },

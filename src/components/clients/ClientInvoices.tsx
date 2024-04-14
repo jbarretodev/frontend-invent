@@ -39,7 +39,7 @@ const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
 
   const columns: TableColumn<DataRowClientInvoice>[] = [
     {
-      name: "Numero de Operacion",
+      name: "Numero de Operación",
       selector: (row) => row.num_operation || "",
       sortable: true,
     },
@@ -49,7 +49,7 @@ const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
       sortable: true,
     },
     {
-      name: "Metodo de pago",
+      name: "Método de pago",
       selector: (row) => row.paymentMethod,
       sortable: true,
     },
@@ -100,7 +100,7 @@ const ClientInvoicesComponent = ({ fullName, invoices }: ClientInvoiceProp) => {
           )}
         </div>
         <DataTable
-          title={`Listado de compras de ${fullName}`}
+          title={`Listado de compras de: ${fullName}`}
           columns={columns}
           data={ dataTable }
           pagination

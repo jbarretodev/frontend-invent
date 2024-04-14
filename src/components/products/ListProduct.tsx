@@ -27,7 +27,7 @@ const ListProduct = ({ className, reloadFlag }: Props) => {
       sortable: true,
     },
     {
-      name: "Codigo",
+      name: "Código",
       selector: (row) => row.code,
       sortable: true,
     },

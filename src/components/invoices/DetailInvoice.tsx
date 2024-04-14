@@ -23,10 +23,10 @@ const DetailInvoice = ({ id }: DetailInvoiceProp) => {
           <Table>
             <Table.Head>
               <Table.HeadCell>Responsable</Table.HeadCell>
-              <Table.HeadCell>Metodo de Pago</Table.HeadCell>
+              <Table.HeadCell>Método de Pago</Table.HeadCell>
               <Table.HeadCell>Status</Table.HeadCell>
               <Table.HeadCell>Fecha</Table.HeadCell>
-              <Table.HeadCell>Num. Operacion</Table.HeadCell>
+              <Table.HeadCell>Num. Operación</Table.HeadCell>
               <Table.HeadCell>Total Neto</Table.HeadCell>
               <Table.HeadCell>SubTotal</Table.HeadCell>
               <Table.HeadCell>Total</Table.HeadCell>

@@ -24,28 +24,28 @@ const ListClient = () => {
       sortable: true,
     },
     {
-      name: "Identificacion",
+      name: "Identificación",
       selector: (row) => row.identification,
       sortable: true,
     },
     {
-      name: "Telefono",
+      name: "Teléfono",
       selector: (row) => row.phone || "NO TIENE",
       sortable: true,
     },
     {
-      name: "Fecha Creacion",
+      name: "Fecha de Creación",
       selector: (row) => row.createdAt.split("T")[0],
       sortable: true,
     },
     {
-      name: "Detalle de Compras",
+      name: "Detalles de Compras",
       selector: (row) => row.id,
       cell: (row) => (
         <CustomCell
           id={row.id}
-          message="Ver Compras"
-          route={ `/dashboard/clients/${ row.id }/invoice` }
+          message="Ver Compra"
+          route={`/dashboard/clients/${row.id}/invoice`}
           type={1}
         />
       ),

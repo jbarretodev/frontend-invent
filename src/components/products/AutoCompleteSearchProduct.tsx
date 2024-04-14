@@ -9,7 +9,9 @@ interface AutoCompleteProp {
 const AutoCompleteSearchProduct: React.FC<AutoCompleteProp> = ({
   listProducts,
   onProductSelected,
-}: AutoCompleteProp) => {
+}: AutoCompleteProp ) =>
+{
+  
   useEffect(() => {
     onProductSelected(listProducts.products[0]);
   }, [listProducts]);

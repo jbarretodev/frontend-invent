@@ -25,7 +25,7 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
       sortable: true,
     },
     {
-      name: "Monto",
+      name: "Total",
       selector: (row) => row.total,
       sortable: true,
     },
@@ -49,8 +49,8 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
       selector: (row) => row.id,
       cell: (row) => (
         <CustomCell
-          message='Ver Detalles!'
-          route='/dashboard/invoice'
+          message="Ver Detalles!"
+          route="/dashboard/invoice"
           id={row.id}
         />
       ),
@@ -69,9 +69,9 @@ const ListInvoices = ({ dateSearch }: ListInvoicesProps) => {
 
   return (
     <>
-      <Card className='gap-3'>
+      <Card className="gap-3">
         <DataTable
-          title='Listas de Ventas'
+          title="Listas de Ventas"
           pagination
           columns={column}
           data={purchase}

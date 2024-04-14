@@ -118,12 +118,14 @@ export interface DetailInvoiceRow {
   name: string;
   quantity: number;
   price: number;
+  iva: number;
   total: number;
 }
 
 export interface Purchase {
   total_invoice: number;
   status: boolean;
+  subtotal: number;
   payment_method: string;
   num_operation?: string;
   full_name_client?: string;
@@ -137,6 +139,7 @@ export interface Detail {
   quantity: number;
   unit_price: number;
   total_line: number;
+  iva: number;
 }
 
 export interface Invoice {
@@ -186,15 +189,16 @@ export interface PurchaseRow {
 
 export interface DetailInvoiceInter {
   id: number;
-  totalInvoice: string;
+  totalInvoice: number;
   userId: number;
   date: string;
   status: boolean;
   createdAt: string;
   updatedAt: string;
   paymentMethod: string;
-  numOperation: any;
+  numOperation: string;
   user: User;
+  subtotal: number;
   detail_invoice: InfoDetailInvoice[];
 }
 

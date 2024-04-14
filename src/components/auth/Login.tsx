@@ -14,8 +14,10 @@ interface ChildProps {
 const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const makeLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsProcessing(true);
     e.preventDefault();
 
     if (email.trim() === "") {
@@ -30,6 +32,8 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
 
     const rsLogin: ResponseLoginUser | ResourceNotFound =
       await AuthService.login(email, password);
+
+    setIsProcessing(false);
 
     if ("message" in rsLogin) {
       toast.error("Error! Credenciales Incorrectas");
@@ -79,7 +83,7 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
             />
           </div>
 
-          <Button type="submit" id="button-login">
+          <Button isProcessing={isProcessing} type="submit" id="button-login">
             Iniciar Sesion!
           </Button>
         </form>

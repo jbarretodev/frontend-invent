@@ -27,6 +27,7 @@ import InvoiceRequest from "../../api/Invoice";
 import toast from "react-hot-toast";
 import ClientRequest from "../../api/client";
 import { Spinner } from "flowbite-react";
+import IvaRequest from "../../api/iva";
 
 const FormInvoice = () => {
   const [details, setDetails] = useState<DetailInvoiceRow[]>([]);
@@ -48,6 +49,10 @@ const FormInvoice = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [disableClient, setDisabledClient] = useState<boolean>(true);
   const [clientId, setClientId] = useState<number>(0);
+  const [subTotal, setSubTotal] = useState<number>(0.0);
+  const [iva, setIva] = useState<number>(0.0);
+  const [exempts, setExempts] = useState<number[]>([]);
+  const [isLoadingPurchase, setIsLoadingPurchase] = useState<boolean>(false);
 
   const getProductSelected = (product: Product) => {
     if (product) {
@@ -69,15 +74,25 @@ const FormInvoice = () => {
       return;
     }
 
+    let amountIvaCalculated: number = 0.0;
+
     if (productSelected) {
+      let totalCalculated = !isByUnit
+        ? Number(Number(productSelected.price * newValue).toFixed(2))
+        : Number(Number(productSelected.price * quantity).toFixed(2));
+
+      if (productSelected.exempt) {
+        amountIvaCalculated = (iva * totalCalculated) / 100;
+        setExempts([...exempts, amountIvaCalculated]);
+      }
+
       const detail: DetailInvoiceRow = {
         id: productSelected.id,
         name: productSelected.name,
         price: productSelected.price,
+        iva: amountIvaCalculated,
         quantity: !isByUnit ? newValue : quantity,
-        total: !isByUnit
-          ? Number(Number(productSelected.price * newValue).toFixed(2))
-          : Number(Number(productSelected.price * quantity).toFixed(2)),
+        total: totalCalculated,
       };
 
       setDetails([...details, detail]);
@@ -89,6 +104,7 @@ const FormInvoice = () => {
   };
 
   const saveNewPurshase = async () => {
+    setIsLoadingPurchase(true);
     if (Number(total) === 0) {
       toast.error(
         "Error! Debe tener al menos un producto para efectuar la compra!",
@@ -99,8 +115,9 @@ const FormInvoice = () => {
 
     const dataInvoice: Purchase = {
       status: isPaid,
+      subtotal: subTotal,
       num_operation: numOperation,
-      total_invoice: total,
+      total_invoice: total + subTotal,
       payment_method: _typeOperation,
     };
 
@@ -117,6 +134,7 @@ const FormInvoice = () => {
         quantity: detail.quantity,
         unit_price: detail.price,
         total_line: detail.total,
+        iva: detail.iva,
       };
     });
 
@@ -136,6 +154,8 @@ const FormInvoice = () => {
     if (rsPurchase.status === 201) {
       toast.success("Compra registrada con exito", { duration: 5000 });
       setDetails([]);
+      setExempts([]);
+      setSubTotal(0.0);
       setIsPaid(false);
       setQuantity(0);
       setTotal(0);
@@ -144,7 +164,20 @@ const FormInvoice = () => {
       setFullNameClient("");
       setIdentification("");
     }
+    setIsLoadingPurchase(false);
   };
+
+  useEffect(() => {
+    IvaRequest.getCurrentValueIva()
+      .then((rs) => {
+        setIva(rs?.value as number);
+        //const iva = rs.data.value;
+        //setSubTotal(total * iva / 100);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -168,6 +201,7 @@ const FormInvoice = () => {
 
   useEffect(() => {
     setTotal(details.reduce((acc, row) => acc + row.total, 0));
+    setSubTotal(details.reduce((acc, row) => acc + row.iva, 0));
   }, [details]);
 
   useEffect(() => {
@@ -347,7 +381,7 @@ const FormInvoice = () => {
                 </div>
                 <TextInput
                   readOnly
-                  value={total}
+                  value={total + subTotal}
                   id="total_invoice"
                   name="total_invoice"
                   type="text"
@@ -358,7 +392,12 @@ const FormInvoice = () => {
                 label="Fue pagada?"
                 onChange={setIsPaid}
               />
-              <Button onClick={saveNewPurshase}>Registrar Compra!</Button>
+              <Button
+                isProcessing={isLoadingPurchase}
+                onClick={saveNewPurshase}
+              >
+                Registrar Compra!
+              </Button>
             </form>
           </Card>
         </div>
@@ -371,6 +410,7 @@ const FormInvoice = () => {
                   <TableHeadCell>Producto</TableHeadCell>
                   <TableHeadCell>Precio</TableHeadCell>
                   <TableHeadCell>Cantidad</TableHeadCell>
+                  <TableHeadCell>IVA</TableHeadCell>
                   <TableHeadCell>Total</TableHeadCell>
                   <TableHeadCell>
                     <span className="sr-only">Edit</span>
@@ -387,6 +427,7 @@ const FormInvoice = () => {
                       </TableCell>
                       <TableCell>{detail.price}</TableCell>
                       <TableCell>{detail.quantity}</TableCell>
+                      <TableCell>{detail.iva}</TableCell>
                       <TableCell>{detail.total}</TableCell>
                       <TableCell>
                         <Button
@@ -407,7 +448,26 @@ const FormInvoice = () => {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell>
-                      <strong>Total a Pagar:</strong> {Number(total).toFixed(2)}
+                      <strong>SubTotal:</strong> {Number(subTotal).toFixed(2)}
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <strong>Total Neto:</strong> {Number(total).toFixed(2)}
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <strong>Total a Pagar:</strong>{" "}
+                      {Number(total + subTotal).toFixed(2)}
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>

@@ -105,7 +105,9 @@ const FormInvoice = () => {
 
   const saveNewPurshase = async () => {
     setIsLoadingPurchase(true);
-    if (Number(total) === 0) {
+    if ( Number( total ) === 0 )
+    {
+      setIsLoadingPurchase(false)
       toast.error(
         "Error! Debe tener al menos un producto para efectuar la compra!",
         { duration: 5000 }
@@ -139,9 +141,12 @@ const FormInvoice = () => {
     });
 
     if (isPaid && numOperation.trim() === "") {
-      toast.error("Error! si fue pagada debe introducir el número de operación!", {
-        duration: 5000,
-      });
+      toast.error(
+        "Error! si fue pagada debe introducir el número de operación!",
+        {
+          duration: 5000,
+        }
+      );
 
       return false;
     }

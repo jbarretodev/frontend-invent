@@ -1,3 +1,4 @@
+import { RsInvoiceNotPaid } from "./index.d";
 export interface ResponseLoginUser {
   user: User;
   token: string;
@@ -126,7 +127,7 @@ export interface Purchase {
   total_invoice: number;
   status: boolean;
   subtotal: number;
-  payment_method: string;
+  payment_method?: string;
   num_operation?: string;
   full_name_client?: string;
   identification?: string;
@@ -263,4 +264,50 @@ export interface IvaResponse {
   id: number;
   updatedAt: Date;
   value: number;
+}
+
+export interface CommerceResponse {
+  address: string;
+  createdAt: Date;
+  id: number;
+  identification: string;
+  name: string;
+  phone: string;
+  updatedAt: Date;
+}
+
+export interface CommerceCreate {
+  name: string;
+  identification: string;
+  phone: string;
+  address: string;
+}
+
+export interface RsInvoiceNotPaid {
+  client: Client | null;
+  clientId: number | null;
+  createdAt: Date;
+  date: Date;
+  id: number;
+  numOperation: string | null;
+  paymentMethod: string;
+  status: boolean;
+  subtotal: string;
+  totalInvoice: string;
+  updatedAt: Date;
+  user: User;
+  userId: number;
+}
+
+export interface InvoicesNotPaidInter {
+  total: number;
+  invoices: RsInvoiceNotPaid[] | [];
+}
+
+export interface InvoicesNotPaidTable {
+  id: number;
+  client: string;
+  total: number;
+  date: string;
+  responsible: string;
 }

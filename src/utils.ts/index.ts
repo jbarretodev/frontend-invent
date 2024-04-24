@@ -7,6 +7,9 @@ import {
   ListClientTable,
   Client,
   InvoiceCli,
+  InvoicesNotPaidInter,
+  RsInvoiceNotPaid,
+  InvoicesNotPaidTable,
 } from "./../@types/index.d";
 import dayjs from "dayjs";
 import { DataProductRow, ListOperationHistory, Product } from "../@types";
@@ -97,6 +100,20 @@ export const getFieldsClientInvoices = (invoices: InvoiceCli[]) => {
       num_operation: invoice.numOperation,
       date: invoice.date,
       paymentMethod: invoice.paymentMethod,
+    };
+  });
+};
+
+export const getFieldsInvoiceNotPaidTable = (
+  dataTableNotPaid: InvoicesNotPaidInter
+): InvoicesNotPaidTable[] => {
+  return dataTableNotPaid.invoices.map((invoice: RsInvoiceNotPaid) => {
+    return {
+      id: invoice.id,
+      client: invoice.client?.fullName || "",
+      date: dayjs(invoice.date).format("YYYY-MM-DD"),
+      total: Number(invoice.totalInvoice),
+      responsible: invoice.user.fullName,
     };
   });
 };

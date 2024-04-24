@@ -32,6 +32,9 @@ const BeSide = () => {
               <Sidebar.Item href="/dashboard/invoice/consolidate">
                 Ventas Consolidadas
               </Sidebar.Item>
+              <Sidebar.Item href="/dashboard/invoice/not-paid">
+                Ventas por Cobrar
+              </Sidebar.Item>
             </Sidebar.Collapse>
             <Sidebar.Collapse label="Productos" href="#" icon={HiShoppingCart}>
               <Sidebar.Item href="/dashboard/products">
@@ -53,7 +56,7 @@ const BeSide = () => {
             <Sidebar.Item href="/dashboard/clients" icon={HiOutlineUsers}>
               Clientes
             </Sidebar.Item>
-            <Sidebar.Item href="/dashboard/clients" icon={FaStore}>
+            <Sidebar.Item href="/dashboard/commerce" icon={FaStore}>
               Info. del Comercio
             </Sidebar.Item>
             {/* <Sidebar.Item href='#' icon={HiInbox} label='3'>

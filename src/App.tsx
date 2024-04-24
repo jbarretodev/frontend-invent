@@ -8,6 +8,7 @@ import ProductPage from "./pages/ProductPage";
 import InventPage from "./pages/InventoryPage";
 import ListOperationInventoryPage from "./pages/ListOperationInventoryPage";
 import InvoicePage from "./pages/InvoicePage";
+
 import ListInvoicePage from "./pages/ListInvoicePage";
 import DetailInvoice from "./pages/DetailInvoicePage";
 import InvoiceConsolidatePage from "./pages/InvoiceConsolidatePage";
@@ -15,6 +16,8 @@ import DetailProductPage from "./pages/DetailProductPage";
 import ClientPage from "./pages/ClientPage";
 import Page404 from "./pages/page404";
 import InvoiceByClientPage from "./pages/InvoiceByClientPage";
+import InfoCommercePage from "./pages/InfoCommercePage";
+import InvoicesNotPaidPage from "./pages/InvoicesNotPaidPage";
 
 function App() {
   return (
@@ -31,11 +34,19 @@ function App() {
               path="invent/list"
               element={<ListOperationInventoryPage />}
             />
+            <Route path="commerce" element={<InfoCommercePage />}></Route>
             <Route path="invoice" element={<InvoicePage />}></Route>
             <Route path="clients" element={<ClientPage />}></Route>
-            <Route path="clients/:id/invoice" element={<InvoiceByClientPage />}></Route>
+            <Route
+              path="clients/:id/invoice"
+              element={<InvoiceByClientPage />}
+            ></Route>
             <Route path="invoice/list" element={<ListInvoicePage />}></Route>
             <Route path="invoice/:id" element={<DetailInvoice />}></Route>
+            <Route
+              path="invoice/not-paid"
+              element={<InvoicesNotPaidPage />}
+            ></Route>
             <Route
               path="invoice/consolidate"
               element={<InvoiceConsolidatePage />}

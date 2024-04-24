@@ -3,14 +3,23 @@ import {
   DetailInvoiceInter,
   Invoice,
   InvoiceFilePDF,
+  InvoicesNotPaid,
   ListInvoices,
+  RsInvoiceNotPaid,
 } from "../@types";
 import axiosInstance from "../utils.ts/axios";
 import axios, { AxiosResponse } from "axios";
 
 export default class InvoiceRequest {
   static async saveNewPurshase(invoice: Invoice) {
-    return await axiosInstance.post("/invoices", invoice);
+    try {
+      if (invoice.invoice.payment_method === "NINGUNO")
+        delete invoice.invoice.payment_method;
+      
+      return await axiosInstance.post("/invoices", invoice);
+    } catch (error) {
+      return undefined;
+    }
   }
 
   static async getInvoices(dateSearch: string) {
@@ -72,5 +81,23 @@ export default class InvoiceRequest {
     } catch (error) {
       console.error("Error al descargar el archivo PDF:", error);
     }
+  }
+
+  static async getInvoiceNotPaid() {
+    const invoices = await axiosInstance.get<RsInvoiceNotPaid[]>(
+      "/invoices/not-paid"
+    );
+
+    if (invoices.data.length === 0) {
+      return { total: 0, invoices: [] } as InvoicesNotPaid;
+    }
+
+    let totalNotPaid: number = 0;
+
+    invoices.data.forEach((invoice) => {
+      totalNotPaid += Number(invoice.totalInvoice);
+    });
+
+    return { invoices: invoices.data, total: totalNotPaid } as InvoicesNotPaid;
   }
 }

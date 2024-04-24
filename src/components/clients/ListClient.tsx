@@ -44,7 +44,7 @@ const ListClient = () => {
       cell: (row) => (
         <CustomCell
           id={row.id}
-          message="Ver Compra"
+          message="Ver Compras"
           route={`/dashboard/clients/${row.id}/invoice`}
           type={1}
         />

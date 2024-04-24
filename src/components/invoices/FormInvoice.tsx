@@ -107,6 +107,7 @@ const FormInvoice = () => {
   const saveNewPurshase = async () => {
     setIsLoadingPurchase(true);
     if (Number(total) === 0) {
+      setIsLoadingPurchase(false);
       toast.error(
         "Error! Debe tener al menos un producto para efectuar la compra!",
         { duration: 5000 }
@@ -140,9 +141,12 @@ const FormInvoice = () => {
     });
 
     if (isPaid && numOperation.trim() === "") {
-      toast.error("Error! si fue pagada debe introducir el número de operación!", {
-        duration: 5000,
-      });
+      toast.error(
+        "Error! si fue pagada debe introducir el número de operación!",
+        {
+          duration: 5000,
+        }
+      );
 
       return false;
     }
@@ -151,6 +155,15 @@ const FormInvoice = () => {
       invoice: dataInvoice,
       details: listDetails,
     });
+
+    setIsLoadingPurchase(false);
+
+    if (!rsPurchase) {
+      toast.error("Ha ocurrido un error en el servidor!, intentelo luego", {
+        duration: 6000,
+      });
+      return;
+    }
 
     if (rsPurchase.status === 201) {
       toast.success("Compra registrada con éxito", { duration: 5000 });
@@ -165,7 +178,6 @@ const FormInvoice = () => {
       setFullNameClient("");
       setIdentification("");
     }
-    setIsLoadingPurchase(false);
   };
 
   useEffect(() => {
@@ -360,6 +372,7 @@ const FormInvoice = () => {
                   <option value={"Bs Efectvo"}>Bs Efectvo</option>
                   <option value={"$ efectivo"}>$ efectivo</option>
                   <option value={"TDC"}>Tarjeta de Credito</option>
+                  <option value={"NINGUNO"}>NINGUNO</option>
                 </Select>
               </div>
               <div className="max-w-md">

@@ -3,8 +3,9 @@ import {
   DetailInvoiceInter,
   Invoice,
   InvoiceFilePDF,
-  InvoicesNotPaid,
+  InvoicesNotPaidInter,
   ListInvoices,
+  PayDebt,
   RsInvoiceNotPaid,
 } from "../@types";
 import axiosInstance from "../utils.ts/axios";
@@ -15,7 +16,7 @@ export default class InvoiceRequest {
     try {
       if (invoice.invoice.payment_method === "NINGUNO")
         delete invoice.invoice.payment_method;
-      
+
       return await axiosInstance.post("/invoices", invoice);
     } catch (error) {
       return undefined;
@@ -89,7 +90,7 @@ export default class InvoiceRequest {
     );
 
     if (invoices.data.length === 0) {
-      return { total: 0, invoices: [] } as InvoicesNotPaid;
+      return { total: 0, invoices: [] } as InvoicesNotPaidInter;
     }
 
     let totalNotPaid: number = 0;
@@ -98,6 +99,22 @@ export default class InvoiceRequest {
       totalNotPaid += Number(invoice.totalInvoice);
     });
 
-    return { invoices: invoices.data, total: totalNotPaid } as InvoicesNotPaid;
+    return {
+      invoices: invoices.data,
+      total: totalNotPaid,
+    } as InvoicesNotPaidInter;
+  }
+
+  static async payDebt(invoiceId: number, params: PayDebt) {
+    try {
+      const rs = await axiosInstance.patch<DetailInvoiceInter>(
+        `/invoices/${invoiceId}/pay-debt`,
+        params
+      );
+
+      return rs.data;
+    } catch (error) {
+      return undefined;
+    }
   }
 }

@@ -311,3 +311,8 @@ export interface InvoicesNotPaidTable {
   date: string;
   responsible: string;
 }
+
+export interface PayDebt {
+  paymentMethod: string;
+  reference: string;
+}

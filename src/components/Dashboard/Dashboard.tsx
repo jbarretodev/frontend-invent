@@ -1,8 +1,87 @@
 import { Card } from "flowbite-react";
-import { AreaChart, BarChart } from "@tremor/react";
+import { AreaChart, LineChart, BarList } from "@tremor/react";
 import { DonutChart } from "@tremor/react";
+import { Datepicker } from "flowbite-react";
+import Report from "./../../api/Report";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import toast from "react-hot-toast";
+import { ReportBestSelling, reportSells } from "../../@types";
 
-const Dashboard = () => {
+const Dashboard = ():JSX.Element => {
+  const [dates, setDates] = useState<{
+    dateInit: string;
+    dateEnd: string;
+  }>({
+    dateInit: dayjs().subtract(7, "days").format("YYYY-MM-DD"),
+    dateEnd: dayjs().format("YYYY-MM-DD"),
+  });
+
+  const [bestSelling, setBestSelling] = useState<ReportBestSelling[]>([]);
+  const [reportSells, setReportSells] = useState<reportSells[]>([]);
+
+  useEffect(() => {
+    if (
+      dayjs(dates.dateInit).isSame(dayjs(dates.dateEnd)) ||
+      dayjs(dates.dateInit).isAfter(dayjs(dates.dateEnd))
+    ) {
+      toast.error("La fecha de inicio debe ser menor a la fecha final");
+    } else {
+      const requests = [
+        Report.getBestSelling(dates.dateInit, dates.dateEnd),
+        Report.getReportSells(dates.dateInit, dates.dateEnd),
+      ];
+
+      Promise.allSettled(requests).then((rs) => {
+        if (rs[0].status === "fulfilled") {
+          setBestSelling(rs[0].value as ReportBestSelling[]);
+        }
+
+        if (rs[1].status === "fulfilled") {
+          setReportSells(rs[1].value as reportSells[]);
+        }
+      });
+    }
+  }, [dates]);
+  //   labels: ["Día 1", "Día 2", "Día 3", "Día 4", "Día 5"], // Eje X
+  //   datasets: [
+  //     {
+  //       label: "Ventas ($)",
+  //       data: [100, 150, 120, 180, 200], // Eje Y
+  //       borderColor: "rgba(75,192,192,1)", // Color de la línea
+  //       backgroundColor: "rgba(75,192,192,0.2)", // Relleno debajo de la línea
+  //       tension: 0.3, // Suavizado de la línea
+  //     },
+  //   ],
+  // };
+
+  // const options = {
+  //   responsive: true,
+  //   plugins: {
+  //     legend: {
+  //       position: "top",
+  //     },
+  //     tooltip: {
+  //       enabled: true,
+  //     },
+  //   },
+  //   scales: {
+  //     x: {
+  //       title: {
+  //         display: true,
+  //         text: "Tiempo",
+  //       },
+  //     },
+  //     y: {
+  //       title: {
+  //         display: true,
+  //         text: "Ventas ($)",
+  //       },
+  //       beginAtZero: true,
+  //     },
+  //   },
+  // };
+
   const chartdata1 = [
     {
       date: "Jan 22",
@@ -123,60 +202,125 @@ const Dashboard = () => {
       value: 1398,
     },
   ];
+  //   {
+  //     date: "Jan 23",
+  //     SolarPanels: 2890,
+  //   },
+  //   {
+  //     date: "Feb 23",
+  //     SolarPanels: 2756,
+  //   },
+  //   {
+  //     date: "Mar 23",
+  //     SolarPanels: 3322,
+  //   },
+  //   {
+  //     date: "Apr 23",
+  //     SolarPanels: 3470,
+  //   },
+  //   {
+  //     date: "May 23",
+  //     SolarPanels: 3475,
+  //   },
+  //   {
+  //     date: "Jun 23",
+  //     SolarPanels: 3129,
+  //   },
+  //   {
+  //     date: "Jul 23",
+  //     SolarPanels: 3490,
+  //   },
+  //   {
+  //     date: "Aug 23",
+  //     SolarPanels: 2903,
+  //   },
+  //   {
+  //     date: "Sep 23",
+  //     SolarPanels: 2643,
+  //   },
+  //   {
+  //     date: "Oct 23",
+  //     SolarPanels: 2837,
+  //   },
+  //   {
+  //     date: "Nov 23",
+  //     SolarPanels: 2954,
+  //   },
+  //   {
+  //     date: "Dec 23",
+  //     SolarPanels: 3239,
+  //   },
+  // ];
+
+  const onDateChange = (field: "dateInit" | "dateEnd", value: Date) => {
+    const formattedDate = dayjs(value).format("YYYY-MM-DD");
+    setDates((prevDates) => ({
+      ...prevDates,
+      [field]: formattedDate,
+    }));
+  };
 
   const dataFormatter = (number: number) =>
     `$${Intl.NumberFormat("us").format(number).toString()}`;
 
   return (
     <>
-      <div className='flex flex-wrap overflow-hidden'>
-        <div className='w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2'>
-          <Card>
-            <AreaChart
-              className='h-80'
-              data={chartdata1}
-              index='date'
-              categories={["SemiAnalysis", "The Pragmatic Engineer"]}
-              colors={["indigo", "rose"]}
-              valueFormatter={dataFormatter}
-              yAxisWidth={60}
-              onValueChange={(v) => console.log(v)}
-            />
-          </Card>
-        </div>
-        <div className='w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2'>
-          <Card>
-            <BarChart
-              data={chartdat2}
-              index='name'
-              categories={["Number of threatened species"]}
-              colors={["blue"]}
-              valueFormatter={dataFormatter}
-              yAxisWidth={48}
-              onValueChange={(v) => console.log(v)}
-            />
-          </Card>
-        </div>
-        {/* <div className='w-1/3  sm:w-full  md:w-full  lg:w-full  xl:w-1/3 xl:px-1 xl:my-1 md:my-2 sm:my-2'>
-          <Card></Card>
-        </div> */}
+      <div className="flex mt-8 mb-8 items-center gap-y-4">
+        <Datepicker
+          title="Fecha de inicio"
+          language="es-ES"
+          value={dates.dateInit}
+          onSelectedDateChanged={(date) => onDateChange("dateInit", date)}
+          className="w-60 mr-5"
+        />
+        <Datepicker
+          title="Fecha final"
+          language="es-ES"
+          value={dates.dateEnd}
+          onSelectedDateChanged={(date) => onDateChange("dateEnd", date)}
+          className="w-60"
+        />
       </div>
-      <div className='flex flex-wrap overflow-hidden'>
-        <div className='w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2'>
+      <div className="flex flex-wrap overflow-hidden">
+        <div className="w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2">
+          <Card>
+            <BarList data={bestSelling} />
+          </Card>
+        </div>
+        <div className="w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2">
+          <Card>
+            <LineChart
+              className="h-80"
+              data={reportSells}
+              index="date"
+              categories={["totalInvoice"]}
+              valueFormatter={(number: number) =>
+                `$${Intl.NumberFormat("us").format(number).toString()}`
+              }
+              onValueChange={(v) => console.log(v)}
+            />
+          </Card>
+        </div>
+        <div className="w-1/3  sm:w-full  md:w-full  lg:w-full  xl:w-1/3 xl:px-1 xl:my-1 md:my-2 sm:my-2">
+          <Card></Card>
+        </div>
+      </div>
+      <div className="flex flex-wrap overflow-hidden">
+        <div className="w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2">
           <Card>
             <DonutChart
               data={datahero}
-              variant='donut'
+              variant="donut"
               valueFormatter={dataFormatter}
               onValueChange={(v) => console.log(v)}
             />
           </Card>
         </div>
-        <div className='w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2'>
+        <div className="w-1/2  sm:w-full  md:w-full  lg:w-full  xl:w-1/2 xl:px-1 xl:my-1 md:my-2 sm:my-2">
           <Card>
             <DonutChart
               data={datahero}
-              variant='pie'
+              variant="pie"
               valueFormatter={dataFormatter}
               onValueChange={(v) => console.log(v)}
             />

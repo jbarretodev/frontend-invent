@@ -18,6 +18,8 @@ import Page404 from "./pages/page404";
 import InvoiceByClientPage from "./pages/InvoiceByClientPage";
 import InfoCommercePage from "./pages/InfoCommercePage";
 import InvoicesNotPaidPage from "./pages/InvoicesNotPaidPage";
+import UserPage from "./pages/UserPage";
+import UserDetailPage from "./pages/UserDetailPage";
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
               path="invoice/consolidate"
               element={<InvoiceConsolidatePage />}
             ></Route>
+            <Route path="users" element={<UserPage />}></Route>
+            <Route path="user/:id" element={<UserDetailPage />}></Route>
           </Route>
           <Route path="/" element={<LoginPage />} />
           <Route path="*" element={<Page404 />} />

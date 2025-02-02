@@ -5,7 +5,6 @@ import AuthService from "../../api/auth";
 import { ResponseLoginUser, ResourceNotFound } from "../../@types";
 import toast from "react-hot-toast";
 import React from "react";
-//import { useHotkeys } from "react-hotkeys-hook";
 
 interface ChildProps {
   redirectToDashboard: () => void;
@@ -33,6 +32,8 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
     const rsLogin: ResponseLoginUser | ResourceNotFound =
       await AuthService.login(email, password);
 
+    console.log(rsLogin);
+
     setIsProcessing(false);
 
     if ("message" in rsLogin) {
@@ -49,12 +50,12 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
 
   return (
     <>
-      <Card className="max-w-md">
-        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <Card className="w-full max-w-lg p-6">
+        <h5 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           Bienvenido a Invent
         </h5>
         <form
-          className="flex max-w-md flex-col gap-4"
+          className="flex flex-col gap-6"
           onSubmit={(e) => {
             makeLogin(e);
           }}
@@ -67,7 +68,7 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
               id="email1"
               onChange={(e) => setEmail(e.target.value)}
               type="email"
-              placeholder="xxx@yyy.com"
+              placeholder="example@gmail.com"
               required
             />
           </div>
@@ -79,6 +80,7 @@ const Login: React.FC<ChildProps> = ({ redirectToDashboard }) => {
               id="password"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
+              placeholder="********"
               required
             />
           </div>

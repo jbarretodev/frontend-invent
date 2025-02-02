@@ -12,6 +12,7 @@ const CommerceComponent = () => {
     identification: "",
     name: "",
     phone: "",
+    dolarRate: 0.0,
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,6 +35,8 @@ const CommerceComponent = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     setIsLoading(true);
     e.preventDefault();
+    commerce.dolarRate = Number( commerce.dolarRate.toString() );
+    
     CommerceRequest.updateInfoCommerce(commerce)
       .then((__rs) => {
         setIsLoading(false);
@@ -85,6 +88,17 @@ const CommerceComponent = () => {
                 type="phone"
                 name="phone"
                 value={commerce.phone}
+                onChange={handleInputChange}
+                shadow
+              />
+            </div>
+            <div>
+              <Label htmlFor="dolarRate" value="Tasa de Dolar" />
+              <TextInput
+                id="dolarRate"
+                type="string"
+                name="dolarRate"
+                value={commerce.dolarRate}
                 onChange={handleInputChange}
                 shadow
               />

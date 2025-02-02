@@ -28,6 +28,7 @@ import toast from "react-hot-toast";
 import ClientRequest from "../../api/client";
 import { Spinner } from "flowbite-react";
 import IvaRequest from "../../api/iva";
+import CommerceRequest from "../../api/CommerceRequest";
 
 const FormInvoice = () => {
   const [details, setDetails] = useState<DetailInvoiceRow[]>([]);
@@ -53,7 +54,7 @@ const FormInvoice = () => {
   const [iva, setIva] = useState<number>(0.0);
   const [exempts, setExempts] = useState<number[]>([]);
   const [isLoadingPurchase, setIsLoadingPurchase] = useState<boolean>(false);
-
+  const [dolarRate, setDolarRate] = useState<number>(0.0);
 
   const getProductSelected = (product: Product) => {
     if (product) {
@@ -79,8 +80,8 @@ const FormInvoice = () => {
 
     if (productSelected) {
       let totalCalculated = !isByUnit
-        ? Number(Number(productSelected.price * newValue).toFixed(2))
-        : Number(Number(productSelected.price * quantity).toFixed(2));
+        ? Number(Number((productSelected.price * dolarRate) * newValue).toFixed(2))
+        : Number(Number((productSelected.price * dolarRate) * quantity).toFixed(2));
 
       if (productSelected.exempt) {
         amountIvaCalculated = (iva * totalCalculated) / 100;
@@ -105,7 +106,8 @@ const FormInvoice = () => {
   };
 
   const saveNewPurshase = async () => {
-    setIsLoadingPurchase(true);
+    setIsLoadingPurchase( true );
+    
     if (Number(total) === 0) {
       setIsLoadingPurchase(false);
       toast.error(
@@ -190,6 +192,13 @@ const FormInvoice = () => {
       .catch((err) => {
         console.log(err);
       });
+
+    CommerceRequest.getDolarRate()
+      .then((rs) => {
+        const dolarRate = rs?.dolarRate as number;
+        setDolarRate((prevState) => (prevState = dolarRate));
+      })
+      .catch((_err) => {});
   }, []);
 
   useEffect(() => {

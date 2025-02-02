@@ -15,6 +15,29 @@ export interface User {
   active: boolean;
   avatar: string;
   token: string;
+  roleId: number;
+}
+
+export interface UserUpdate {
+  id?: number;
+  fullName: string;
+  email: string;
+  role_id: number;
+}
+
+export interface UserCreateInter {
+  fullName: string;
+  password: string;
+  email: string;
+  role_id: number;
+}
+
+export interface UserRow {
+  id: number;
+  fullName: string;
+  email: string;
+  createdAt: string;
+  active: boolean;
 }
 
 export interface Credential {
@@ -273,6 +296,7 @@ export interface CommerceResponse {
   identification: string;
   name: string;
   phone: string;
+  dolarRate: number;
   updatedAt: Date;
 }
 
@@ -281,6 +305,7 @@ export interface CommerceCreate {
   identification: string;
   phone: string;
   address: string;
+  dolarRate: number;
 }
 
 export interface RsInvoiceNotPaid {
@@ -316,3 +341,23 @@ export interface PayDebt {
   paymentMethod: string;
   reference: string;
 }
+
+export interface ReportBestSelling {
+  name: string;
+  value: number;
+}
+
+export interface reportSells {
+  date: string;
+  totalInvoice: number;
+}
+
+export type Roles = Root2[];
+
+export interface Role {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+

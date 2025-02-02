@@ -28,4 +28,19 @@ export default class CommerceRequest {
       return undefined;
     }
   }
+
+  static async getDolarRate() {
+    try {
+      const response = await axiosInstance.get<{ dolarRate: number }>(
+        "/commerce/dolar-rate"
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
 }
